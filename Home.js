@@ -3,7 +3,7 @@ import {ImageBackground, StyleSheet, Text, View, Image} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 
-// Home Screen which includes Host Game and Join Game Buttons
+// Home Screen which includes Host and Join Buttons
 class Home extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
@@ -12,26 +12,22 @@ class Home extends React.Component {
                 <View style={styles.carContainer}>
 
                     <ImageBackground
-                        source={require('./assets/HomeScreen.png')}
+                        source={require('./assets/Background.png')}
                         style={styles.image}
                     />
 
                     <View style={styles.titles}>
-                        <Text style={styles.title}>Badger Bytes</Text>
-                        <Text style={styles.subtitle}>Get Your Grub On</Text>
+                        <Text style={styles.title}>Guess Your Friends</Text>
+                        <Text style={styles.subtitle}>Placeholder</Text>
                     </View>
 
-                    <Image
-                        source={require('./assets/UW-MadisonCrest.png')}
-                        style={styles.crest}
-                    />
 
                     <View style={styles.button1}>
-                        <ButtonWithBackground onPress={() => {navigate('Login')}} text='Login' color='#d12a3b' />
+                        <ButtonWithBackground onPress={() => {navigate('Host')}} text='Host a Game' color='#d12a3b' />
                     </View>
 
                     <View style={styles.button2}>
-                        <ButtonWithBackground onPress={() => {navigate('Signup')}} text='Sign Up' color='#d12a3b' />
+                        <ButtonWithBackground onPress={() => {navigate('Join')}} text='Join a Game' color='#d12a3b' />
                     </View>
                 </View>
                 <StatusBar style="auto" />
