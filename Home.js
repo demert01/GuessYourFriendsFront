@@ -3,7 +3,7 @@ import {ImageBackground, StyleSheet, Text, View, Image} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 
-// Home Screen which includes Login and SignUp Buttons
+// Home Screen which includes Host Game and Join Game Buttons
 class Home extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
