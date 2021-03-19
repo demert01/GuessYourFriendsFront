@@ -12,13 +12,13 @@ class Home extends React.Component {
                 <View style={styles.carContainer}>
 
                     <ImageBackground
-                        source={require('./assets/Background.png')}
+                        source={require('./assets/background.png')}
                         style={styles.image}
                     />
 
                     <View style={styles.titles}>
                         <Text style={styles.title}>Guess Your Friends</Text>
-                        <Text style={styles.subtitle}>Placeholder</Text>
+                        <Text style={styles.subtitle}>Lets Get Judgy</Text>
                     </View>
 
 
