@@ -3,7 +3,7 @@ import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 
-class RoundScreen extends React.Component {
+class GameResults extends React.Component {
     
     // Navigates to Submit Order
     moveToSubmitOrder = (paymentType) => {
@@ -121,4 +121,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default RoundScreen
+export default GameResults
