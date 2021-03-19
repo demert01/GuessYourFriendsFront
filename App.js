@@ -13,8 +13,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-          <Stack.Screen name="Host" component={Signup} options={{ headerShown: true }} />
-          <Stack.Screen name="Join" component={Login} options={{ headerShown: true }} />
+          <Stack.Screen name="Host" component={Host} options={{ headerShown: true }} />
+          <Stack.Screen name="Join" component={Join} options={{ headerShown: true }} />
         </Stack.Navigator>
       </NavigationContainer>
   );
