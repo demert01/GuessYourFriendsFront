@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ButtonWithBackground from "./button";
-import { StyleSheet, Text, View, ImageBackground, ScrollView, TextInput, Platform } from 'react-native';
-import input from './input';
+import { StyleSheet, Text, View, ImageBackground, ScrollView } from 'react-native';
+
 
 // 
-export default class Join extends React.Component {
-  
+export default class Category extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -24,26 +23,10 @@ export default class Join extends React.Component {
               <Text style={styles.subtitle}>Placeholder</Text>
             </View>
 
-            
-
             <View style={styles.importantText}>
               <Text style={styles.instruction}>Type in the Game Code</Text>
             </View>
 
-
-            <View style={styles.code}>  
-
-          <TextInput  
-          placeholder="Enter Your Code"  
-          underlineColorAndroid='transparent'  
-          style={styles.TextInputStyle}  
-          />  
-          </View>  
-          
-
-            <View style={styles.button1}>
-            <ButtonWithBackground onPress={() => {navigate('Category')}} text='Question Category temporary' color = '#000000'/>
-            </View>
 
 
           </ScrollView>
@@ -63,13 +46,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  code: {
-    marginTop: '20%',
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 
   carContainer: {
     width: '100%',
@@ -79,7 +55,7 @@ const styles = StyleSheet.create({
   titles: {
     width: '100%',
     alignItems: 'center',
-    //backgroundColor: '#d12a3b'
+    backgroundColor: '#d12a3b'
   },
   button1: {
     marginTop: '80%',

@@ -18,7 +18,7 @@ class GameResults extends React.Component {
                 <View style={styles.carContainer}>
 
                     <ImageBackground
-                        source={require('./assets/HomeScreen.png')}
+                        source={require('./assets/background.png')}
                         style={styles.image}
                     />
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, Image} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, Image, TouchableHightlight} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 
@@ -17,23 +17,32 @@ class Home extends React.Component {
                     />
 
                     <View style={styles.titles}>
-                        <Text style={styles.title}>Guess Your Friends</Text>
+                        <Text style={styles.title}>Guess Your </Text>
+                        <Text style={styles.title}>Friends</Text>
                         <Text style={styles.subtitle}>Lets Get Judgy</Text>
                     </View>
 
 
                     <View style={styles.button1}>
-                        <ButtonWithBackground onPress={() => {navigate('Host')}} text='Host a Game' color='#d12a3b' />
+                        <ButtonWithBackground onPress={() => {navigate('Host')}} text='Host a Game' color = '#000000'/>
+                        
                     </View>
 
                     <View style={styles.button2}>
                         <ButtonWithBackground onPress={() => {navigate('Join')}} text='Join a Game' color='#d12a3b' />
                     </View>
+
+                   
+
                 </View>
                 <StatusBar style="auto" />
             </View>
         );
+    function blink(){
+
     }
+    }
+
 }
 
 // Formatting
@@ -51,8 +60,9 @@ const styles = StyleSheet.create({
     },
 
     button1: {
-        marginTop: '10%',
+        marginTop: '40%',
         alignItems: 'center',
+        color: '#000000'
     },
 
     button2: {
@@ -61,15 +71,20 @@ const styles = StyleSheet.create({
 
     },
 
+    button3: {
+        
+        fontSize: 40
+
+    },
     titles: {
         marginTop: '22%',
         width: '100%',
         alignItems: 'center',
-        backgroundColor: '#d12a3b'
+       // backgroundColor: '#d12a3b'
     },
 
     title: {
-        fontSize: 40,
+        fontSize: 30,
         fontWeight: '700',
         color: 'white'
     },
