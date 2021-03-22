@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, ScrollView, FlatList } from 'react-native';
+import ButtonWithBackground from "./button";
+import { StyleSheet, Text, View, ImageBackground} from 'react-native';
 
 // Displays Login Screen
 export default class Login extends React.Component {
   render() {
+    const { navigate } = this.props.navigation;
     return (  
         <View style={styles.container}>
           <View style={styles.carContainer}>
@@ -14,7 +16,6 @@ export default class Login extends React.Component {
                 style={styles.image}
             />
 
-            <ScrollView>
               <View style={styles.titles}>
                 <Text style={styles.title}>Guess Your Friends</Text>
                 <Text style={styles.subtitle}>Placeholder</Text>
@@ -23,7 +24,10 @@ export default class Login extends React.Component {
               <View style={styles.importantText}>
                 <Text style={styles.instruction}>Your Lobby Code:</Text>
               </View>
-            </ScrollView>
+
+            <View style={styles.button}>
+              <ButtonWithBackground onPress={() => {navigate('RoundScreen')}} text='Start the Game!' color = '#000000'/>         
+            </View>
           </View>
           <StatusBar style="auto" />
           
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
   titles: {
     width: '100%',
     alignItems: 'center',
-    backgroundColor: '#d12a3b'
+    //backgroundColor: '#d12a3b'
   },
 
   title: {
@@ -83,5 +87,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: 'white',
     marginTop: 27
+  },
+
+  button: {
+    marginTop: '60%',
+    alignItems: 'center',
+    color: '#000000'
   }
 });
