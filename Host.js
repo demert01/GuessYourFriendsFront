@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, ScrollView, FlatList } from 'react-native';
-import InputLogin from './InputLogin.js'
 
 // Displays Login Screen
 export default class Login extends React.Component {
@@ -11,7 +10,7 @@ export default class Login extends React.Component {
           <View style={styles.carContainer}>
  
             <ImageBackground 
-                source={require('./assets/Background.png')}
+                source={require('./assets/background.png')}
                 style={styles.image}
             />
 
@@ -24,8 +23,6 @@ export default class Login extends React.Component {
               <View style={styles.importantText}>
                 <Text style={styles.instruction}>Your Lobby Code:</Text>
               </View>
-              
-              <InputLogin navigation={this.props.navigation}/>
             </ScrollView>
           </View>
           <StatusBar style="auto" />
