@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ButtonWithBackground from "./button";
 import { StyleSheet, Text, View, ImageBackground} from 'react-native';
+import HostScreenInput from './HostScreenInput.js';
 
 // Displays Login Screen
 export default class HostScreen extends React.Component {
@@ -24,6 +25,8 @@ export default class HostScreen extends React.Component {
               <View style={styles.importantText}>
                 <Text style={styles.instruction}>Your Lobby Code:</Text>
               </View>
+
+              <HostScreenInput navigation ={this.props.navigation}/>
 
             <View style={styles.button}>
               <ButtonWithBackground onPress={() => {navigate('RoundScreen')}} text='Start the Game!' color = '#000000'/>         
