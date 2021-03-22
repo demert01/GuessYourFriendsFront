@@ -9,6 +9,7 @@ import RoundScreen from './RoundScreen'
 import QuestionScreen from './QuestionScreen';
 import RoundResults from './RoundResults';
 import GameResults from './GameResults';
+import Waiting from './Waiting';
 
 
 const Stack = createStackNavigator();
@@ -25,6 +26,7 @@ export default function App() {
           <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: true }} />
           <Stack.Screen name="RoundResults" component={RoundResults} options={{ headerShown: true }} />
           <Stack.Screen name="GameResults" component={GameResults} options={{ headerShown: true }} />
+          <Stack.Screen name="Waiting" component={Waiting} options={{ headerShown: true }} />
 
         </Stack.Navigator>
       </NavigationContainer>

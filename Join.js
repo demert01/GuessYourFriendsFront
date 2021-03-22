@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ButtonWithBackground from "./button";
 import { StyleSheet, Text, View, ImageBackground, ScrollView, TextInput, Platform } from 'react-native';
-import input from './input';
+import Input from './Input';
 
 // 
 export default class Join extends React.Component {
@@ -31,19 +31,8 @@ export default class Join extends React.Component {
             </View>
 
 
-            <View style={styles.code}>  
 
-          <TextInput  
-          placeholder="Enter Your Code"  
-          underlineColorAndroid='transparent'  
-          style={styles.TextInputStyle}  
-          />  
-          </View>  
-          
-
-            <View style={styles.button1}>
-            <ButtonWithBackground onPress={() => {navigate('Category')}} text='Question Category temporary' color = '#000000'/>
-            </View>
+            <Input navigation={this.props.navigation}/>
 
 
           </ScrollView>
