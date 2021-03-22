@@ -24,7 +24,7 @@ class Home extends React.Component {
 
 
                     <View style={styles.button1}>
-                        <ButtonWithBackground onPress={() => {navigate('Host')}} text='Host a Game' color = '#000000'/>
+                        <ButtonWithBackground onPress={() => {navigate('HostScreen')}} text='Host a Game' color = '#000000'/>
                         
                     </View>
 

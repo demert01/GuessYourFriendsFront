@@ -3,11 +3,8 @@ import React from 'react';
 import ButtonWithBackground from "./button";
 import { StyleSheet, Text, View, ImageBackground} from 'react-native';
 
-
-
-
-// Displays Host Screen
-export default class Host extends React.Component {
+// Displays Login Screen
+export default class HostScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (  

@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from "./Home";
 import Host from "./Host";
+import HostScreen from "./HostScreen";
 import Join from './Join';
 import RoundScreen from './RoundScreen'
 import QuestionScreen from './QuestionScreen';
@@ -18,7 +19,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-          <Stack.Screen name="Host" component={Host} options={{ headerShown: true }} />
+          <Stack.Screen name="HostScreen" component={HostScreen} options={{ headerShown: true }} />
           <Stack.Screen name="Join" component={Join} options={{ headerShown: true }} />
           <Stack.Screen name="RoundScreen" component={RoundScreen} options={{ headerShown: true }} />
           <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: true }} />
