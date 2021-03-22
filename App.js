@@ -20,7 +20,7 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="Host" component={Host} options={{ headerShown: true }} />
           <Stack.Screen name="Join" component={Join} options={{ headerShown: true }} />
-          <Stack.Screen name="RoundScreen" component={RoundScreen} options={{ headerShown: true }} />\
+          <Stack.Screen name="RoundScreen" component={RoundScreen} options={{ headerShown: true }} />
           <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: true }} />
           <Stack.Screen name="RoundResults" component={RoundResults} options={{ headerShown: true }} />
           <Stack.Screen name="GameResults" component={GameResults} options={{ headerShown: true }} />
