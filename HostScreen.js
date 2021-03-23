@@ -28,11 +28,6 @@ export default class HostScreen extends React.Component {
               </View>
 
               <HostScreenInput navigation ={this.props.navigation}/>
-              <QuestionSelections navigation ={this.props.navigation}/>
-
-            <View style={styles.button}>
-              <ButtonWithBackground onPress={() => {navigate('RoundScreen')}} text='Start the Game!' color = '#000000'/>         
-            </View>
           </View>
           <StatusBar style="auto" />
           

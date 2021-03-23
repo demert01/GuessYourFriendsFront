@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {ActivityIndicator, View, Text, TouchableOpacity, TextInput, StyleSheet, AsyncStorage} from 'react-native'
+import GameAPI from "./API/Game/GameAPI"
+import ButtonWithBackground from "./button";
+import QuestionSelections from "./QuestionSelections";
 
 //const client = require('./Utilities/client');
 
@@ -26,24 +29,19 @@ class HostScreenInput extends Component {
         this.setState({shouldShowActivityIndicator: false});
     };
 
-    login = (username) => {
+    createGame = () => {
         this.setState({shouldShowActivityIndicator: true});
-        client.post('/api/users/login', {
-            username: this.state.username
-        })
-            .then((response) => {
+        GameAPI.create_game(this.state.username)
+            .then(game => {
                 this.removeActivityIndicator();
-
-                HostScreenInput.storeUsername(this.state.username)
-                    .then(() => {
-                        this.navigateToMenu();
-                    });
+                alert("Successfully created game with join code " + game.joinCode);
             })
-            .catch((error) => {
+            .catch(err => {
                 this.removeActivityIndicator();
-                alert(error.response.data.message || 'Error logging in user with username: ' + username)
+                alert("Error creating new game");
             });
     };
+
 
     render() {
         return (
@@ -54,9 +52,14 @@ class HostScreenInput extends Component {
                            placeholder="Enter Your Nickname"
                            placeholderTextColor="black"
                            autoCapitalize="none"
-                           color= "black"
+                           color="black"
                            onChangeText={this.handleUsername}/>
-
+                <QuestionSelections navigation ={this.props.navigation}/>
+                <View style={styles.button}>
+                    <ButtonWithBackground onPress={() => {
+                        this.createGame();
+                    }} text='Start the Game!' color='#000000'/>
+                </View>
             </View>
         )
     }
@@ -91,5 +94,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 23,
         fontWeight: '800'
+    },
+    button: {
+        marginTop: '60%',
+        alignItems: 'center',
+        color: '#000000'
     }
 })
