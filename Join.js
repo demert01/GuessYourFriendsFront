@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ButtonWithBackground from "./button";
 import { StyleSheet, Text, View, ImageBackground, ScrollView, TextInput, Platform } from 'react-native';
-import Input from './Input';
+import Input from './input';
 
 // 
 export default class Join extends React.Component {
