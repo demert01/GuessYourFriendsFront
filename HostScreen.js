@@ -3,6 +3,7 @@ import React from 'react';
 import ButtonWithBackground from "./button";
 import { StyleSheet, Text, View, ImageBackground} from 'react-native';
 import HostScreenInput from './HostScreenInput.js';
+import QuestionSelections from './QuestionSelections.js';
 
 // Displays Login Screen
 export default class HostScreen extends React.Component {
@@ -27,6 +28,7 @@ export default class HostScreen extends React.Component {
               </View>
 
               <HostScreenInput navigation ={this.props.navigation}/>
+              <QuestionSelections navigation ={this.props.navigation}/>
 
             <View style={styles.button}>
               <ButtonWithBackground onPress={() => {navigate('RoundScreen')}} text='Start the Game!' color = '#000000'/>         
