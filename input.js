@@ -1,95 +1,115 @@
-import React, { Component } from 'react';
-import { ActivityIndicator, View, Text, TouchableOpacity, TextInput, StyleSheet, } from 'react-native';
+import React, {Component} from 'react';
+import {ActivityIndicator, View, Text, TouchableOpacity, TextInput, StyleSheet,} from 'react-native';
+import GameAPI from './API/Game/GameAPI'
 
 class Input extends Component {
+    state = {
+        shouldShowActivityIndicator: false
+    };
 
-  handleCode = (text) => {
-    this.setState({code: text})
-  };
+    handleCode = (text) => {
+        this.setState({code: text})
+    };
 
-  handleNickname = (text) => {
-    this.setState({nickname: text})
-  };
+    handleNickname = (text) => {
+        this.setState({nickname: text})
+    };
 
-  navigateToWait = () => {
-    this.props.navigation.navigate("Waiting");
-};
+    removeActivityIndicator = () => {
+        this.setState({shouldShowActivityIndicator: false});
+    };
 
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input1}
-          underlineColorAndroid="transparent"
-          placeholder="Enter a Lobby Code"
-          placeholderTextColor="black"
-          autoCapitalize="none"
-          color= "black"
-          onChangeText={this.handleCode}
-        />
+    navigateToWait = () => {
+        this.setState({shouldShowActivityIndicator: true});
+        GameAPI.get_game_for_join_code(this.state.code, this.state.nickname)
+            .then(game => {
+                alert("Game with join code " + game.joinCode + " successfully joined");
+                this.removeActivityIndicator();
+                // this.props.navigation.navigate("Waiting");
+            })
+            .catch(err => {
+                alert("Failed to join game with code " + this.state.code);
+                this.removeActivityIndicator();
+            });
+    };
 
-        <TextInput
-          style={styles.input2}
-          underlineColorAndroid="transparent"
-          placeholder="Choose a Nickname"
-          placeholderTextColor="black"
-          autoCapitalize="none"
-          color= "black"
-          onChangeText={this.handleNickname}
-        />
+    render() {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.shouldShowActivityIndicator}/>
+                <TextInput
+                    style={styles.input1}
+                    underlineColorAndroid="transparent"
+                    placeholder="Enter a Lobby Code"
+                    placeholderTextColor="black"
+                    autoCapitalize="none"
+                    color="black"
+                    onChangeText={this.handleCode}
+                />
 
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={
-            () => {navigate('Waiting')}
-          }>
-          <Text style={styles.submitButtonText}> Enter the Lobby </Text>
-         </TouchableOpacity>
-      </View>  
-    );
-  }
+                <TextInput
+                    style={styles.input2}
+                    underlineColorAndroid="transparent"
+                    placeholder="Choose a Nickname"
+                    placeholderTextColor="black"
+                    autoCapitalize="none"
+                    color="black"
+                    onChangeText={this.handleNickname}
+                />
+
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={
+                        () => {
+                            this.navigateToWait();
+                        }
+                    }>
+                    <Text style={styles.submitButtonText}> Enter the Lobby </Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
 }
 
 export default Input
 
 const styles = StyleSheet.create({
-  container: {
-      paddingTop: 5,
-      alignItems: 'center',
-      justifyContent: 'center',
-  },
-  input1: {
-      margin: 50,
-      height: 50,
-      width: 300,
-      borderColor: '#ffff00',
-      borderWidth: 5,
-      textAlign: 'center',
-      fontSize: 23,
-      fontWeight: '800'
-  },
-  input2: {
-    margin: 0,
-    height: 50,
-    width: 300,
-    borderColor: '#ffff00',
-    borderWidth: 5,
-    textAlign: 'center',
-    fontSize: 23,
-    fontWeight: '800'
-},
-  submitButton: {
-    backgroundColor: '#ffff00',
-    padding: 10,
-    margin: 50,
-    height: 50,
-    borderRadius: 25
-  },
-  submitButtonText: {
-    color: 'black',
-    textAlign: 'center',
-    fontSize: 23,
-    fontWeight: '800'
-  }
+    container: {
+        paddingTop: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    input1: {
+        margin: 50,
+        height: 50,
+        width: 300,
+        borderColor: '#ffff00',
+        borderWidth: 5,
+        textAlign: 'center',
+        fontSize: 23,
+        fontWeight: '800'
+    },
+    input2: {
+        margin: 0,
+        height: 50,
+        width: 300,
+        borderColor: '#ffff00',
+        borderWidth: 5,
+        textAlign: 'center',
+        fontSize: 23,
+        fontWeight: '800'
+    },
+    submitButton: {
+        backgroundColor: '#ffff00',
+        padding: 10,
+        margin: 50,
+        height: 50,
+        borderRadius: 25
+    },
+    submitButtonText: {
+        color: 'black',
+        textAlign: 'center',
+        fontSize: 23,
+        fontWeight: '800'
+    }
 })
