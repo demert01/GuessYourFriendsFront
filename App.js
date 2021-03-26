@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from "./Home";
-import Host from "./Host";
+import Player from "./Player";
 import HostScreen from "./HostScreen";
 import Join from './Join';
 import RoundScreen from './RoundScreen'
