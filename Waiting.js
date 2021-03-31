@@ -1,6 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, Image, TouchableHightlight} from "react-native";
-import ButtonWithBackground from "./button";
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 
 // Waiting Screen which waits for Host to start Lobby
