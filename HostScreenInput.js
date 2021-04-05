@@ -58,7 +58,7 @@ class HostScreenInput extends Component {
                 <View style={styles.button}>
                     <ButtonWithBackground onPress={() => {
                         this.createGame();
-                    }} text='Start the Game!' color='#000000'/>
+                    }} text='Enter Lobby' color='#000000'/>
                 </View>
             </View>
         )

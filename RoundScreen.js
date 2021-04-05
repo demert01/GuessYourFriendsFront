@@ -1,18 +1,14 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, Animated} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 class RoundScreen extends React.Component {
     
-    // Navigates to Submit Order
-    moveToSubmitOrder = (paymentType) => {
-        this.props.navigation.navigate('SubmitOrder', { cart: this.props.route.params.cart, paymentType: paymentType })
-    };
-
-
-    // Checkout Screen which includes four payment options
+    // Round Screen gives quick briefing before navigating to question screen
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <View style={styles.carContainer}>
@@ -23,29 +19,35 @@ class RoundScreen extends React.Component {
                     />
 
                     <View style={styles.titles}>
-                        <Text style={styles.title}>Badger Bytes</Text>
-                        <Text style={styles.subtitle}>Get Your Grub On</Text>
+                        <Text style={styles.title}>Guess Your Friends</Text>
+                        <Text style={styles.subtitle}>Lets Get Judgy</Text>
                     </View>
 
                     <View style={styles.importantText}>
-                        <Text style={styles.instruction}>Select Your Payment Method</Text>
+                        <Text style={styles.instruction}>Welcome to Round 1</Text>
                     </View>
 
-                    <View style={styles.buttons}>
-                        <ButtonWithBackground onPress={() => this.moveToSubmitOrder("Credit Card")} text='Credit Card' color='#d12a3b' />
+                    <View style={styles.importantText}>
+                        <Text style={styles.instruction2}>Select the Player that best meets each prompt!</Text>
                     </View>
 
-                    <View style={styles.buttons}>
-                        <ButtonWithBackground onPress={() => this.moveToSubmitOrder("PayPal")} text='Paypal' color='#d12a3b' />
-                    </View>
-
-                    <View style={styles.buttons}>
-                        <ButtonWithBackground onPress={() => this.moveToSubmitOrder("Stripe")} text='Stripe' color='#d12a3b' />
-                    </View>
-
-                    <View style={styles.buttons}>
-                        <ButtonWithBackground onPress={() => this.moveToSubmitOrder("ApplePay")} text='ApplePay' color='#d12a3b' />
-                    </View>
+                    <View style={styles.clockContainer}>
+                        <CountdownCircleTimer
+                            isPlaying
+                            duration={15}
+                            colors="#004777"
+                            onComplete={() => {
+                                navigate('QuestionScreen')}             
+                            }
+                        >
+                            {({ remainingTime, animatedColor }) => (
+                                <Animated.Text
+                                    style={{ ...styles.remainingTime, color: animatedColor }}>
+                                    {remainingTime}
+                                </Animated.Text>
+                            )}
+                        </CountdownCircleTimer>
+                    </View>           
 
                 </View>
                 <StatusBar style="auto" />
@@ -82,12 +84,12 @@ const styles = StyleSheet.create({
     titles: {
         width: '100%',
         alignItems: 'center',
-        backgroundColor: '#d12a3b'
+
     },
 
     title: {
         fontSize: 35,
-        fontWeight: '700',
+        fontWeight: '800',
         color: 'white',
         textAlign: 'center'
     },
@@ -108,17 +110,38 @@ const styles = StyleSheet.create({
     importantText: {
         marginTop: '5%',
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
       },
     
     instruction: {
+        fontSize: 35,
+        fontWeight: '800',
+        color: 'white',
+        marginTop: 27,
+        alignItems: 'center'
+      },
+
+    instruction2: {
         fontSize: 25,
         fontWeight: '700',
         color: 'white',
-        marginTop: 27
-      }
+        marginTop: 30,
+        alignItems: 'center'
+      },
 
+    clockContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+       // paddingTop: '5%',
+        //backgroundColor: '#ecf0f1',
+        padding: 8,
+    },
 
+    remainingTime: {
+        fontSize: 46,
+    },
 });
 
 export default RoundScreen
