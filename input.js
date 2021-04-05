@@ -26,7 +26,7 @@ class Input extends Component {
                 this.removeActivityIndicator();
                 let gameNicknames = game.deviceIds;
                 gameNicknames.push(this.state.nickname);
-                this.props.navigation.navigate('Waiting', {isHost: false, lobbyCode: game.joinCode, nicknames: gameNicknames, playerNickname: this.state.nickname});
+                this.props.navigation.navigate('Waiting', {isHost: false, lobbyCode: game.joinCode, nicknames: gameNicknames, playerNickname: this.state.nickname, navigation: this.props.navigation});
             })
             .catch(err => {
                 alert("Failed to join game with code " + this.state.code);

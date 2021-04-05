@@ -34,7 +34,7 @@ class HostScreenInput extends Component {
         GameAPI.create_game(this.state.username)
             .then(game => {
                 this.removeActivityIndicator();
-                this.props.navigation.navigate('Waiting', {isHost: true, lobbyCode: game.joinCode, nicknames: game.deviceIds, hostDeviceId: this.state.username});
+                this.props.navigation.navigate('Waiting', {isHost: true, lobbyCode: game.joinCode, nicknames: game.deviceIds, hostDeviceId: this.state.username, navigation: this.props.navigation});
             })
             .catch(err => {
                 this.removeActivityIndicator();

@@ -42,8 +42,9 @@ class Waiting extends React.Component {
                             if(game.started) {
                                 GameAPI.set_ready(this.props.route.params.lobbyCode, this.props.route.params.playerNickname)
                                     .then(() => {
-                                        //GOOD, move to next screen
-                                        alert("Game has been started and player set to ready");
+                                        clearInterval(this.interval);
+                                        this.setState({makingAPICall: false});
+                                        this.checkAllPlayersReady();
                                     })
                                     .catch(err => {
                                         this.setState({makingAPICall: false});
@@ -60,8 +61,39 @@ class Waiting extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
+    checkArrays = ( arrA, arrB ) => {
+
+        //check if lengths are different
+        if(arrA.length !== arrB.length) return false;
+
+
+        //slice so we do not effect the original
+        //sort makes sure they are in order
+        //join makes it a string so we can do a string compare
+        let cA = arrA.slice().sort().join(",");
+        let cB = arrB.slice().sort().join(",");
+
+        return cA===cB;
+
+    };
+
+
+    checkAllPlayersReady() {
+        this.interval2 = setInterval(() => {
+            if(this.state.makingAPICall === false) {
+                this.setState({makingAPICall: true});
+                GameAPI.get_game_with_join_code(this.props.route.params.lobbyCode)
+                    .then(game => {
+                        if(game.started && this.checkArrays(game.readyPlayers, game.deviceIds)) {
+                            clearInterval(this.interval2);
+                            this.props.route.params.navigation.navigate('RoundScreen');
+                        }
+                    })
+                    .catch(err => {
+                        this.setState({makingAPICall: false});
+                    });
+            }
+        }, 5000);
     }
 
 
@@ -108,7 +140,7 @@ class Waiting extends React.Component {
                                     <ButtonWithBackground onPress={() => {
                                         GameAPI.start_game(this.props.route.params.lobbyCode, this.props.route.params.hostDeviceId)
                                             .then(game => {
-                                                //Move to wait screen
+                                                this.checkAllPlayersReady();
                                             })
                                             .catch(err => {
                                                 alert("Unable to start game");
