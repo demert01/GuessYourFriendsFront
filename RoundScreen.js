@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import {ImageBackground, StyleSheet, Text, View, Animated} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
@@ -7,10 +8,18 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 class RoundScreen extends React.Component {
     
     // Round Screen gives quick briefing before navigating to question screen
+=======
+import {StyleSheet, View} from "react-native";
+
+class RoundScreen extends React.Component {
+
+    // Checkout Screen which includes four payment options
+>>>>>>> 7a3298e35b3fc888fe22ae232dcf7788c89413cd
     render() {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
+<<<<<<< HEAD
                 <View style={styles.carContainer}>
 
                     <ImageBackground
@@ -51,6 +60,8 @@ class RoundScreen extends React.Component {
 
                 </View>
                 <StatusBar style="auto" />
+=======
+>>>>>>> 7a3298e35b3fc888fe22ae232dcf7788c89413cd
             </View>
         );
     }
@@ -63,6 +74,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+<<<<<<< HEAD
     },
 
     carContainer: {
@@ -142,6 +154,9 @@ const styles = StyleSheet.create({
     remainingTime: {
         fontSize: 46,
     },
+=======
+    }
+>>>>>>> 7a3298e35b3fc888fe22ae232dcf7788c89413cd
 });
 
 export default RoundScreen
