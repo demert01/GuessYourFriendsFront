@@ -34,11 +34,11 @@ class HostScreenInput extends Component {
         GameAPI.create_game(this.state.username)
             .then(game => {
                 this.removeActivityIndicator();
-                alert("Successfully created game with join code " + game.joinCode);
+                this.props.navigation.navigate('Waiting', {isHost: true, lobbyCode: game.joinCode, nicknames: game.deviceIds, hostDeviceId: this.state.username});
             })
             .catch(err => {
                 this.removeActivityIndicator();
-                alert("Error creating new game");
+                alert(err.message);
             });
     };
 

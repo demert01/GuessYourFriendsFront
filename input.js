@@ -23,9 +23,10 @@ class Input extends Component {
         this.setState({shouldShowActivityIndicator: true});
         GameAPI.get_game_for_join_code(this.state.code, this.state.nickname)
             .then(game => {
-                alert("Game with join code " + game.joinCode + " successfully joined");
                 this.removeActivityIndicator();
-                // this.props.navigation.navigate("Waiting");
+                let gameNicknames = game.deviceIds;
+                gameNicknames.push(this.state.nickname);
+                this.props.navigation.navigate('Waiting', {isHost: false, lobbyCode: game.joinCode, nicknames: gameNicknames, playerNickname: this.state.nickname});
             })
             .catch(err => {
                 alert("Failed to join game with code " + this.state.code);
