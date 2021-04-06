@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, ScrollView, RefreshControl, Image, TouchableHightlight} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, ScrollView, RefreshControl, ActivityIndicator} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import ButtonWithBackground from "./button";
 import Game from "./API/Game/Game";
@@ -13,7 +13,8 @@ class Waiting extends React.Component {
         this.state = {
             refreshing: false,
             nicknames: this.props.route.params.nicknames,
-            makingAPICall: false
+            makingAPICall: false,
+            loading: false
         };
     }
 
@@ -79,21 +80,25 @@ class Waiting extends React.Component {
 
 
     checkAllPlayersReady() {
+        this.setState({loading: true});
         this.interval2 = setInterval(() => {
             if(this.state.makingAPICall === false) {
                 this.setState({makingAPICall: true});
                 GameAPI.get_game_with_join_code(this.props.route.params.lobbyCode)
                     .then(game => {
-                        if(game.started && this.checkArrays(game.readyPlayers, game.deviceIds)) {
+                        if(game.started && this.checkArrays(game.readyPlayers, game.deviceIds) && game.gameStartTime) {
+                            this.setState({loading: false});
                             clearInterval(this.interval2);
-                            this.props.route.params.navigation.navigate('RoundScreen');
+                            this.props.route.params.navigation.navigate('RoundScreen', {gameStartTime: game.gameStartTime});
+                        } else {
+                            this.setState({makingAPICall: false});
                         }
                     })
                     .catch(err => {
                         this.setState({makingAPICall: false});
                     });
             }
-        }, 5000);
+        }, 3000);
     }
 
 
@@ -121,6 +126,13 @@ class Waiting extends React.Component {
                         }
                     </View>
 
+                    {this.state.loading &&
+                    <View style={styles.loading}>
+                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                        <ActivityIndicator/>
+                    </View>
+                    }
+
                     <ScrollView refreshControl={
                         <RefreshControl
                             refreshing={this.state.refreshing}
@@ -138,11 +150,13 @@ class Waiting extends React.Component {
                             this.props.route.params.isHost ?
                                 <View style={styles.button1}>
                                     <ButtonWithBackground onPress={() => {
+                                        this.setState({loading: true});
                                         GameAPI.start_game(this.props.route.params.lobbyCode, this.props.route.params.hostDeviceId)
                                             .then(game => {
                                                 this.checkAllPlayersReady();
                                             })
                                             .catch(err => {
+                                                this.setState({loading: false});
                                                 alert("Unable to start game");
                                             });
                                     }} text='Start Game' color='#d12a3b' />
@@ -221,6 +235,13 @@ const styles = StyleSheet.create({
         marginTop: 35,
         textAlign: 'center'
       },
+    loadingText:  {
+        fontSize: 18,
+        fontWeight: '700',
+        color: 'white',
+        marginTop: 5,
+        textAlign: 'center'
+    },
     item: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -235,6 +256,17 @@ const styles = StyleSheet.create({
         marginTop: '20%',
         alignItems: 'center',
     },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        opacity: 0.5,
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 
 });
 

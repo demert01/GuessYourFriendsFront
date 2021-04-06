@@ -1,11 +1,26 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, Animated} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, Animated, ActivityIndicator} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 class RoundScreen extends React.Component {
-    
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isReady: false,
+            loading: true,
+        };
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(() => {
+            clearInterval(this.interval);
+            this.setState({loading: false, isReady: true})
+        }, new Date(this.props.route.params.gameStartTime).getTime() - new Date().getTime());
+    }
+
     // Round Screen gives quick briefing before navigating to question screen
     render() {
         const { navigate } = this.props.navigation;
@@ -31,9 +46,16 @@ class RoundScreen extends React.Component {
                         <Text style={styles.instruction2}>Select the Player that best meets each prompt!</Text>
                     </View>
 
+                    {this.state.loading &&
+                    <View style={styles.loading}>
+                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                        <ActivityIndicator/>
+                    </View>
+                    }
+
                     <View style={styles.clockContainer}>
                         <CountdownCircleTimer
-                            isPlaying
+                            isPlaying={this.state.isReady}
                             duration={15}
                             colors="#004777"
                             onComplete={() => {
@@ -142,6 +164,24 @@ const styles = StyleSheet.create({
     remainingTime: {
         fontSize: 46,
     },
+    loadingText:  {
+        fontSize: 18,
+        fontWeight: '700',
+        color: 'white',
+        marginTop: 5,
+        textAlign: 'center'
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        opacity: 0.5,
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 export default RoundScreen

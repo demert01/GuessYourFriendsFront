@@ -9,7 +9,8 @@ exports.get_game_for_join_code = async (joinCode, newDeviceId) => {
                 const joinedGameDeviceIds = response.data.game.deviceIds;
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers));
+                const gameStartTime = response.data.game.gameStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
             })
             .catch(err => {
                 reject(err);
@@ -29,7 +30,8 @@ exports.get_game_with_join_code = async (joinCode) => {
                 const joinedGameDeviceIds = response.data.game.deviceIds;
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers));
+                const gameStartTime = response.data.game.gameStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
             })
             .catch(err => {
                 reject(err);
@@ -49,8 +51,8 @@ exports.create_game = async (hostDeviceId) => {
               const gameDeviceIds = response.data.game.deviceIds;
                const started = response.data.game.started;
                const readyPlayers = response.data.game.readyPlayers;
-
-              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers));
+               const gameStartTime = response.data.game.gameStartTime;
+              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers, gameStartTime));
            })
            .catch((err) => {
                reject(err);
@@ -71,7 +73,8 @@ exports.set_ready = async (joinCode, deviceID) => {
                 const joinedGameDeviceIds = response.data.game.deviceIds;
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers));
+                const gameStartTime = response.data.game.gameStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
             })
             .catch(err => {
                 reject(err);
@@ -91,7 +94,8 @@ exports.start_game = async (joinCode, hostDeviceId) => {
                 const joinedGameDeviceIds = response.data.game.deviceIds;
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers));
+                const gameStartTime = response.data.game.gameStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
             })
             .catch(err => {
                 reject(err);
