@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {ActivityIndicator, View, Text, TouchableOpacity, TextInput, StyleSheet, AsyncStorage} from 'react-native'
 import GameAPI from "./API/Game/GameAPI"
+import QuestionSetAPI from "./API/QuestionSet/QuestionSetAPI";
 import ButtonWithBackground from "./button";
 import QuestionSelections from "./QuestionSelections";
 
@@ -10,7 +11,8 @@ import QuestionSelections from "./QuestionSelections";
 class HostScreenInput extends Component {
     state = {
         username: '',
-        shouldShowActivityIndicator: false
+        shouldShowActivityIndicator: false,
+        questionSets: []
     };
 
     static async storeUsername(username) {
@@ -42,6 +44,22 @@ class HostScreenInput extends Component {
             });
     };
 
+    getQuestionSets = () => {
+        this.setState({shouldShowActivityIndicator: true});
+        QuestionSetAPI.get_question_sets()
+            .then(sets => {
+                this.setState({questionSets: sets, shouldShowActivityIndicator: false});
+            })
+            .catch(err => {
+                alert("There was a problem getting the question sets");
+                this.setState({shouldShowActivityIndicator: false});
+            });
+    };
+
+    componentDidMount() {
+        this.getQuestionSets();
+    }
+
 
     render() {
         return (
@@ -54,7 +72,7 @@ class HostScreenInput extends Component {
                            autoCapitalize="none"
                            color="black"
                            onChangeText={this.handleUsername}/>
-                <QuestionSelections navigation ={this.props.navigation}/>
+                <QuestionSelections navigation ={this.props.navigation} questionSets={this.state.questionSets}/>
                 <View style={styles.button}>
                     <ButtonWithBackground onPress={() => {
                         this.createGame();

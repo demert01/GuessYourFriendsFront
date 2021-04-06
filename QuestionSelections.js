@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,Button,Picker
+	Platform,
+	StyleSheet,
+	Text,
+	View, Button, Picker, ScrollView
 } from 'react-native';
 
 
 class QuestionsSelections extends React.Component{
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state={
-			PickerValue:''
-			
+			PickerValue:'',
+			questionSets: this.props.questionSets
 		}
 		
 	};
@@ -24,7 +24,14 @@ class QuestionsSelections extends React.Component{
 			alert(data);
 		}
 		
+	};
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if(this.props.questionSets !== prevProps.questionSets) {
+			this.setState({questionSets: this.props.questionSets});
+		}
 	}
+
   render() {
     return (
       <View style={styles.container}>
@@ -34,11 +41,11 @@ class QuestionsSelections extends React.Component{
 		selectedValue={this.state.PickerValue}
 		onValueChange={(itemValue,itemIndex) => this.setState({PickerValue:itemValue})}
 		>
-		<Picker.Item label="Select Question Categories" value=""/>
-		<Picker.Item label="Kids" value="Kids" />
-		<Picker.Item label="Adults" value="Adults"/>
-    <Picker.Item label="Sports" value="Sports"/>
-    <Picker.Item label="Animals" value="Animals"/>
+			{
+				this.state.questionSets.map((item, index) => (
+					<Picker.Item label={item.name} value={item._id}/>
+				))
+			}
 		</Picker>
 		<Button title="Select" onPress={this.clickme}/>
         
