@@ -18,6 +18,7 @@ const ButtonWithBackground = props => {
 const styles = StyleSheet.create({
     button: {
         borderRadius: 36,
+        marginTop: '10%',
         padding: 16,
         width: 200,
         alignItems: 'center'
@@ -25,9 +26,9 @@ const styles = StyleSheet.create({
 
     text:{
         color: 'white',
-        fontWeight: 'bold',
+        fontWeight: '800',
         textTransform: 'uppercase',
-        fontSize: 16,
+        fontSize: 20,
         textAlign: 'center',
     }
 });
