@@ -10,7 +10,9 @@ exports.get_game_for_join_code = async (joinCode, newDeviceId) => {
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
                 const gameStartTime = response.data.game.gameStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
+                const questionSet = response.data.game.questionSet;
+                const questions = response.data.game.questions;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
             })
             .catch(err => {
                 reject(err);
@@ -31,7 +33,9 @@ exports.get_game_with_join_code = async (joinCode) => {
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
                 const gameStartTime = response.data.game.gameStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
+                const questionSet = response.data.game.questionSet;
+                const questions = response.data.game.questions;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
             })
             .catch(err => {
                 reject(err);
@@ -43,16 +47,18 @@ exports.get_game_with_join_code = async (joinCode) => {
     });
 };
 
-exports.create_game = async (hostDeviceId) => {
+exports.create_game = async (hostDeviceId, questionSet) => {
     let gamePromise = new Promise((resolve, reject) => {
-       client.post('/api/game/', {hostDeviceId: hostDeviceId})
+       client.post('/api/game/', {hostDeviceId: hostDeviceId, questionSet: questionSet})
            .then((response) => {
               const newGameCode = response.data.game.joinCode;
               const gameDeviceIds = response.data.game.deviceIds;
                const started = response.data.game.started;
                const readyPlayers = response.data.game.readyPlayers;
                const gameStartTime = response.data.game.gameStartTime;
-              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers, gameStartTime));
+               const questionSet = response.data.game.questionSet;
+               const questions = response.data.game.questions;
+              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
            })
            .catch((err) => {
                reject(err);
@@ -74,7 +80,9 @@ exports.set_ready = async (joinCode, deviceID) => {
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
                 const gameStartTime = response.data.game.gameStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
+                const questionSet = response.data.game.questionSet;
+                const questions = response.data.game.questions;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
             })
             .catch(err => {
                 reject(err);
@@ -95,7 +103,9 @@ exports.start_game = async (joinCode, hostDeviceId) => {
                 const started = response.data.game.started;
                 const readyPlayers = response.data.game.readyPlayers;
                 const gameStartTime = response.data.game.gameStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime));
+                const questionSet = response.data.game.questionSet;
+                const questions = response.data.game.questions;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
             })
             .catch(err => {
                 reject(err);

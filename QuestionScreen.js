@@ -4,6 +4,14 @@ import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 
 class QuestionScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currQuestionNumber: 0,
+            players: this.props.route.params.players
+        }
+    }
+
     // Round Screen gives quick briefing before navigating to question screen
     render() {
         //const { navigate } = this.props.navigation;
@@ -22,19 +30,17 @@ class QuestionScreen extends React.Component {
                     </View>
 
                     <View style={styles.importantText}>
-                        <Text style={styles.instruction}>Sample Question: Who is all bark no bite?</Text>
+                        <Text style={styles.instruction}>{this.props.route.params.questions[this.state.currQuestionNumber].questionContent}</Text>
                     </View>
 
                     <View style={styles.buttons}>
 
                         <ScrollView>
-                            <ButtonWithBackground text='Player 1' color='#ff2e63' />
-
-                            <ButtonWithBackground text='Player 2' color='#ff2e63' />
-
-                            <ButtonWithBackground text='Player 3' color='#ff2e63' />
-
-                            <ButtonWithBackground text='Player 4' color='#ff2e63' />
+                            {
+                                this.state.players.map((item, index) => (
+                                    <ButtonWithBackground text={item} key={index} color='#ff2e63' />
+                                ))
+                            }
 
                         </ScrollView>
 

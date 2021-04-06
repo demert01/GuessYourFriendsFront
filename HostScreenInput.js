@@ -9,18 +9,14 @@ import QuestionSelections from "./QuestionSelections";
 
 // Handles text field data from login page and communicates to backend
 class HostScreenInput extends Component {
-    state = {
-        username: '',
-        shouldShowActivityIndicator: false,
-        questionSets: []
-    };
-
-    static async storeUsername(username) {
-        try {
-            await AsyncStorage.setItem("username", username);
-        } catch (error) {
-            alert("Something went wrong")
-        }
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            shouldShowActivityIndicator: false,
+            questionSets: [],
+            selectedQuestionSet: null,
+        };
     }
 
     handleUsername = (text) => {
@@ -33,10 +29,11 @@ class HostScreenInput extends Component {
 
     createGame = () => {
         this.setState({shouldShowActivityIndicator: true});
-        GameAPI.create_game(this.state.username)
+        GameAPI.create_game(this.state.username, this.state.selectedQuestionSet)
             .then(game => {
                 this.removeActivityIndicator();
-                this.props.navigation.navigate('Waiting', {isHost: true, lobbyCode: game.joinCode, nicknames: game.deviceIds, hostDeviceId: this.state.username, navigation: this.props.navigation});
+                this.props.navigation.navigate('Waiting', {isHost: true, lobbyCode: game.joinCode,
+                    nicknames: game.deviceIds, hostDeviceId: this.state.username, navigation: this.props.navigation});
             })
             .catch(err => {
                 this.removeActivityIndicator();
@@ -60,6 +57,11 @@ class HostScreenInput extends Component {
         this.getQuestionSets();
     }
 
+    selectQuestionSet = (id) => {
+        console.log(id);
+        this.setState({selectedQuestionSet: id});
+    };
+
 
     render() {
         return (
@@ -72,7 +74,7 @@ class HostScreenInput extends Component {
                            autoCapitalize="none"
                            color="black"
                            onChangeText={this.handleUsername}/>
-                <QuestionSelections navigation ={this.props.navigation} questionSets={this.state.questionSets}/>
+                <QuestionSelections navigation ={this.props.navigation} questionSets={this.state.questionSets} selectQuestionSet={this.selectQuestionSet}/>
                 <View style={styles.button}>
                     <ButtonWithBackground onPress={() => {
                         this.createGame();

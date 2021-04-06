@@ -11,24 +11,15 @@ class QuestionsSelections extends React.Component{
 	constructor(props){
 		super(props);
 		this.state={
-			PickerValue:'',
+			PickerValue: this.props.questionSets.length > 0 ? this.props.questionSets[0]._id : "",
 			questionSets: this.props.questionSets
-		}
-		
-	};
-	clickme=()=>{
-		var data = this.state.PickerValue;
-		if(data==""){
-			alert("Option Not Selected!");
-		}else{
-			alert(data);
 		}
 		
 	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if(this.props.questionSets !== prevProps.questionSets) {
-			this.setState({questionSets: this.props.questionSets});
+			this.setState({PickerValue: this.props.questionSets.length > 0 ? this.props.questionSets[0]._id : "", questionSets: this.props.questionSets});
 		}
 	}
 
@@ -39,15 +30,17 @@ class QuestionsSelections extends React.Component{
 		<Picker
 		style={{width:'80%'}}
 		selectedValue={this.state.PickerValue}
-		onValueChange={(itemValue,itemIndex) => this.setState({PickerValue:itemValue})}
+		onValueChange={(itemValue,itemIndex) => {
+			this.props.selectQuestionSet(itemValue);
+			this.setState({PickerValue: itemValue});
+		}}
 		>
 			{
 				this.state.questionSets.map((item, index) => (
-					<Picker.Item label={item.name} value={item._id}/>
+					<Picker.Item key={index} label={item.name} value={item._id}/>
 				))
 			}
 		</Picker>
-		<Button title="Select" onPress={this.clickme}/>
         
       </View>
     );
