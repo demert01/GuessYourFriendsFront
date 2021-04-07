@@ -72,13 +72,7 @@ class QuestionScreen extends React.Component {
 
                 <View style={styles.questionContainer}>
 
-                    <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.loading}/>
-                    {this.state.waitingForNext &&
-                    <View style={styles.loading}>
-                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
-                        <ActivityIndicator/>
-                    </View>
-                    }
+
 
                     <View style={styles.titles}>
                         <Text style={styles.title}>Question {this.state.currQuestionNumber + 1}</Text>
@@ -101,6 +95,14 @@ class QuestionScreen extends React.Component {
                         </ScrollView>
 
                     </View>
+
+                    <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.loading}/>
+                    {this.state.waitingForNext &&
+                    <View style={styles.loading}>                        
+                        <Text style={styles.loadingText}>Waiting for Other Players</Text>                       
+                        <ActivityIndicator/>
+                    </View>
+                    }
 
                 </View>
 
