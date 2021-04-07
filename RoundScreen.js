@@ -59,7 +59,8 @@ class RoundScreen extends React.Component {
                             duration={15}
                             colors="#004777"
                             onComplete={() => {
-                                navigate('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players})}
+                                navigate('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
+                                    deviceId: this.props.route.params.deviceId})}
                             }
                         >
                             {({ remainingTime, animatedColor }) => (

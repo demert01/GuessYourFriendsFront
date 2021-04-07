@@ -89,7 +89,8 @@ class Waiting extends React.Component {
                         if(game.started && this.checkArrays(game.readyPlayers, game.deviceIds) && game.gameStartTime) {
                             this.setState({loading: false});
                             clearInterval(this.interval2);
-                            this.props.route.params.navigation.navigate('RoundScreen', {gameStartTime: game.gameStartTime, questions: game.questions, players: game.deviceIds});
+                            this.props.route.params.navigation.navigate('RoundScreen', {gameStartTime: game.gameStartTime, questions: game.questions, players: game.deviceIds,
+                            joinCode: game.joinCode, deviceId: this.props.route.params.isHost ? this.props.route.params.hostDeviceId : this.props.route.params.playerNickname});
                         } else {
                             this.setState({makingAPICall: false});
                         }

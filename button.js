@@ -8,10 +8,10 @@ const ButtonWithBackground = props => {
         <View style = {[styles.button, {backgroundColor: props.color}]}>
             <Text style={styles.text}>{props.text}</Text>
         </View>
-    )
+    );
 
     // Click effect
-    return<TouchableOpacity disabled={props.disabled || false} onPress={props.onPress}>{content}</TouchableOpacity>
+    return <TouchableOpacity disabled={props.disabled || false} onPress={props.onPress}>{content}</TouchableOpacity>
 }
 
 // Formatting

@@ -1,15 +1,63 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, ScrollView} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
+const GameAPI = require('./API/Game/GameAPI');
 
 class QuestionScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             currQuestionNumber: 0,
-            players: this.props.route.params.players
+            players: this.props.route.params.players,
+            disableButtons: false,
+            loading: false,
+            makingAPICall: false,
+            waitingForNext: false
         }
+    }
+
+    voteForPlayer = (name) => {
+        this.setState({loading: true, disableButtons: true});
+        GameAPI.vote(this.props.route.params.joinCode, this.state.currQuestionNumber, name, this.props.route.params.deviceId)
+            .then(game => {
+                this.setState({disableButtons: true, loading: false});
+                this.checkReadyForNextQuestion();
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({loading: false, disableButtons: false});
+                alert("There was an error while voting");
+            });
+    };
+
+    checkReadyForNextQuestion() {
+        this.setState({waitingForNext: true});
+        this.interval2 = setInterval(() => {
+            if(this.state.makingAPICall === false) {
+                this.setState({makingAPICall: true});
+                console.log("MAKING API CALL");
+                GameAPI.check_ready_next_question(this.props.route.params.joinCode, this.state.currQuestionNumber)
+                    .then(game => {
+                        if(game.nextQuestionStartTime) {
+                            clearInterval(this.interval2);
+
+                            // Show next question
+                            this.interval = setInterval(() => {
+                                clearInterval(this.interval);
+                                let currQuestion = this.state.currQuestionNumber;
+                                currQuestion = currQuestion + 1;
+                                this.setState({waitingForNext: false, currQuestionNumber: currQuestion, disableButtons: false, makingAPICall: false})
+                            }, new Date(game.nextQuestionStartTime).getTime() - new Date().getTime());
+                        } else {
+                            this.setState({makingAPICall: false});
+                        }
+                    })
+                    .catch(err => {
+                        this.setState({makingAPICall: false});
+                    });
+            }
+        }, 3000);
     }
 
     // Round Screen gives quick briefing before navigating to question screen
@@ -17,7 +65,6 @@ class QuestionScreen extends React.Component {
         //const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-
                 <ImageBackground
                         source={require('./assets/background.png')}
                         style={styles.image}
@@ -25,8 +72,16 @@ class QuestionScreen extends React.Component {
 
                 <View style={styles.questionContainer}>
 
+                    <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.loading}/>
+                    {this.state.waitingForNext &&
+                    <View style={styles.loading}>
+                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                        <ActivityIndicator/>
+                    </View>
+                    }
+
                     <View style={styles.titles}>
-                        <Text style={styles.title}>Question 1</Text>
+                        <Text style={styles.title}>Question {this.state.currQuestionNumber + 1}</Text>
                     </View>
 
                     <View style={styles.importantText}>
@@ -38,10 +93,11 @@ class QuestionScreen extends React.Component {
                         <ScrollView>
                             {
                                 this.state.players.map((item, index) => (
-                                    <ButtonWithBackground text={item} key={index} color='#ff2e63' />
+                                    <ButtonWithBackground disabled={this.state.disableButtons} text={item} key={index} onPress={() => {
+                                        this.voteForPlayer(item);
+                                    }} color='#ff2e63' />
                                 ))
                             }
-
                         </ScrollView>
 
                     </View>
@@ -115,6 +171,24 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center'
       },
+    loadingText:  {
+        fontSize: 18,
+        fontWeight: '700',
+        color: 'white',
+        marginTop: 5,
+        textAlign: 'center'
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        opacity: 0.5,
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 
 });
 export default QuestionScreen

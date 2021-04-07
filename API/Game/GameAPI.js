@@ -12,7 +12,9 @@ exports.get_game_for_join_code = async (joinCode, newDeviceId) => {
                 const gameStartTime = response.data.game.gameStartTime;
                 const questionSet = response.data.game.questionSet;
                 const questions = response.data.game.questions;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
+                const votesByQuestion = response.data.game.votesByQuestion;
+                const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
             })
             .catch(err => {
                 reject(err);
@@ -35,7 +37,9 @@ exports.get_game_with_join_code = async (joinCode) => {
                 const gameStartTime = response.data.game.gameStartTime;
                 const questionSet = response.data.game.questionSet;
                 const questions = response.data.game.questions;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
+                const votesByQuestion = response.data.game.votesByQuestion;
+                const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
             })
             .catch(err => {
                 reject(err);
@@ -58,7 +62,9 @@ exports.create_game = async (hostDeviceId, questionSet) => {
                const gameStartTime = response.data.game.gameStartTime;
                const questionSet = response.data.game.questionSet;
                const questions = response.data.game.questions;
-              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
+               const votesByQuestion = response.data.game.votesByQuestion;
+               const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
            })
            .catch((err) => {
                reject(err);
@@ -82,7 +88,9 @@ exports.set_ready = async (joinCode, deviceID) => {
                 const gameStartTime = response.data.game.gameStartTime;
                 const questionSet = response.data.game.questionSet;
                 const questions = response.data.game.questions;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
+                const votesByQuestion = response.data.game.votesByQuestion;
+                const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
             })
             .catch(err => {
                 reject(err);
@@ -105,7 +113,9 @@ exports.start_game = async (joinCode, hostDeviceId) => {
                 const gameStartTime = response.data.game.gameStartTime;
                 const questionSet = response.data.game.questionSet;
                 const questions = response.data.game.questions;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions));
+                const votesByQuestion = response.data.game.votesByQuestion;
+                const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
             })
             .catch(err => {
                 reject(err);
@@ -115,4 +125,56 @@ exports.start_game = async (joinCode, hostDeviceId) => {
     return await gamePromise.catch(err => {
         throw new Error(err.message || "There was a problem starting the game");
     });
+};
+
+exports.vote = async (joinCode, questionNumber, votedFor, deviceId) => {
+  let gamePromise = new Promise(((resolve, reject) => {
+      client.post('/api/game/vote', {joinCode: joinCode, deviceId: deviceId, votedFor: votedFor, questionNumber: questionNumber})
+          .then((response) => {
+              const joinedGameCode = response.data.game.joinCode;
+              const joinedGameDeviceIds = response.data.game.deviceIds;
+              const started = response.data.game.started;
+              const readyPlayers = response.data.game.readyPlayers;
+              const gameStartTime = response.data.game.gameStartTime;
+              const questionSet = response.data.game.questionSet;
+              const questions = response.data.game.questions;
+              const votesByQuestion = response.data.game.votesByQuestion;
+              const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+              resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+          })
+          .catch(err => {
+              console.log(joinCode);
+              console.log(deviceId);
+              console.log(votedFor);
+              console.log(questionNumber);
+              console.log(err.response.data.message);
+              reject(err);
+          });
+  }));
+
+  return await gamePromise;
+};
+
+exports.check_ready_next_question = async (joinCode, questionNumber) => {
+    let gamePromise = new Promise(((resolve, reject) => {
+        client.post('/api/game/nextQuestion', {joinCode: joinCode, questionNumber: questionNumber})
+            .then((response) => {
+                const joinedGameCode = response.data.game.joinCode;
+                const joinedGameDeviceIds = response.data.game.deviceIds;
+                const started = response.data.game.started;
+                const readyPlayers = response.data.game.readyPlayers;
+                const gameStartTime = response.data.game.gameStartTime;
+                const questionSet = response.data.game.questionSet;
+                const questions = response.data.game.questions;
+                const votesByQuestion = response.data.game.votesByQuestion;
+                const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+            })
+            .catch(err => {
+                console.log(err.response.data.message);
+                reject(err);
+            });
+    }));
+
+    return await gamePromise;
 };
