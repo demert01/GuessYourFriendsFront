@@ -74,11 +74,13 @@ class HostScreenInput extends Component {
                            autoCapitalize="none"
                            color="black"
                            onChangeText={this.handleUsername}/>
-                <QuestionSelections navigation ={this.props.navigation} questionSets={this.state.questionSets} selectQuestionSet={this.selectQuestionSet}/>
+                <QuestionSelections 
+                 navigation ={this.props.navigation}
+                 questionSets={this.state.questionSets} selectQuestionSet={this.selectQuestionSet}/>
                 <View style={styles.button}>
                     <ButtonWithBackground onPress={() => {
                         this.createGame();
-                    }} text='Enter Lobby' color='#000000'/>
+                    }} text='Enter Lobby' color='#ff2e63'/>
                 </View>
             </View>
         )
@@ -89,21 +91,24 @@ export default HostScreenInput
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 5
+        paddingTop: 0,
+       
     },
     input: {
-        margin: 10,
         height: 60,
-        borderColor: '#d12a3b',
-        borderWidth: 8,
+        width: 350,
+        margin: 30,
+        borderColor: '#ff2e63',
+        borderWidth: 5,
+        borderRadius: 25,
         textAlign: 'center',
-        fontSize: 23,
+        fontSize: 25,
         fontWeight: '800'
         
     },
     submitButton: {
-        backgroundColor: '#d12a3b',
-        padding: 10,
+        backgroundColor: '#ff2e63',
+        //padding: 10,
         margin: 15,
         height: 50,
         borderRadius: 36,
@@ -112,12 +117,13 @@ const styles = StyleSheet.create({
     submitButtonText: {
         color: 'white',
         textAlign: 'center',
-        fontSize: 23,
+        fontSize: 25,
         fontWeight: '800'
     },
     button: {
-        marginTop: '60%',
+        marginTop: '40%',
         alignItems: 'center',
         color: '#000000'
-    }
+    },
+
 })

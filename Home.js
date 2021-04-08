@@ -24,12 +24,12 @@ class Home extends React.Component {
 
 
                     <View style={styles.button1}>
-                        <ButtonWithBackground onPress={() => {navigate('HostScreen')}} text='Host a Game' color = '#000000'/>
+                        <ButtonWithBackground onPress={() => {navigate('HostScreen')}} text='Host Game' color = '#ff2e63'/>
                         
                     </View>
 
                     <View style={styles.button2}>
-                        <ButtonWithBackground onPress={() => {navigate('Join')}} text='Join a Game' color='#d12a3b' />
+                        <ButtonWithBackground onPress={() => {navigate('Join')}} text='Join Game' color='#ff2e63' />
                     </View>
 
                    
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
 
     button1: {
-        marginTop: '40%',
+        marginTop: '20%',
         alignItems: 'center',
         color: '#000000'
     },
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 30,
-        fontWeight: '700',
+        fontSize: 50,
+        fontWeight: '900',
         color: 'white'
     },
 
     subtitle: {
-        fontSize: 16,
+        fontSize: 25,
         color: 'white',
         fontWeight: '700'
     },

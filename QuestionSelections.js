@@ -28,12 +28,14 @@ class QuestionsSelections extends React.Component{
       <View style={styles.container}>
         
 		<Picker
-		style={{width:'80%'}}
+		style={styles.dropdown}
 		selectedValue={this.state.PickerValue}
 		onValueChange={(itemValue,itemIndex) => {
 			this.props.selectQuestionSet(itemValue);
 			this.setState({PickerValue: itemValue});
 		}}
+		itemStyle={{color: "black", fontSize: 25, fontWeight: '800'}}
+		
 		>
 			{
 				this.state.questionSets.map((item, index) => (
@@ -60,5 +62,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
+
+  dropdown: {
+	width: '90%',
+	marginBottom: '20%',
+	height: 10,
+	
+
+	
+  }
  
 });

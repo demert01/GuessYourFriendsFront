@@ -41,7 +41,7 @@ class Input extends Component {
                 <TextInput
                     style={styles.input1}
                     underlineColorAndroid="transparent"
-                    placeholder="Enter a Lobby Code"
+                    placeholder="Enter Join Code"
                     placeholderTextColor="black"
                     autoCapitalize="none"
                     color="black"
@@ -51,7 +51,7 @@ class Input extends Component {
                 <TextInput
                     style={styles.input2}
                     underlineColorAndroid="transparent"
-                    placeholder="Choose a Nickname"
+                    placeholder="Enter Your Nickname"
                     placeholderTextColor="black"
                     autoCapitalize="none"
                     color="black"
@@ -65,7 +65,7 @@ class Input extends Component {
                             this.navigateToWait();
                         }
                     }>
-                    <Text style={styles.submitButtonText}> Enter the Lobby </Text>
+                    <Text style={styles.submitButtonText}> Enter Lobby </Text>
                 </TouchableOpacity>
             </View>
         );
@@ -76,41 +76,43 @@ export default Input
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 5,
         alignItems: 'center',
         justifyContent: 'center',
     },
     input1: {
-        margin: 50,
-        height: 50,
-        width: 300,
-        borderColor: '#ffff00',
+        margin: 30,
+        height: 60,
+        width: 350,
+        borderColor: '#ff2e63',
         borderWidth: 5,
+        borderRadius: 25,
         textAlign: 'center',
-        fontSize: 23,
+        fontSize: 25,
         fontWeight: '800'
     },
     input2: {
         margin: 0,
-        height: 50,
-        width: 300,
-        borderColor: '#ffff00',
+        height: 60,
+        width: 350,
+        borderColor: '#ff2e63',
         borderWidth: 5,
+        borderRadius: 25,
         textAlign: 'center',
-        fontSize: 23,
+        fontSize: 25,
         fontWeight: '800'
     },
     submitButton: {
-        backgroundColor: '#ffff00',
+        backgroundColor: '#ff2e63',
         padding: 10,
         margin: 50,
         height: 50,
+        width: 350,
         borderRadius: 25
     },
     submitButtonText: {
-        color: 'black',
+        color: '#ffffff',
         textAlign: 'center',
-        fontSize: 23,
+        fontSize: 25,
         fontWeight: '800'
     }
 })

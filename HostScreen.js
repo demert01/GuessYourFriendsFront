@@ -19,7 +19,8 @@ export default class HostScreen extends React.Component {
             />
 
               <View style={styles.titles}>
-                <Text style={styles.title}>Guess Your Friends</Text>
+                <Text style={styles.title}>Guess Your</Text>
+                <Text style={styles.title}>Friends</Text>
                 <Text style={styles.subtitle}>Placeholder</Text>
               </View>
 
@@ -54,17 +55,17 @@ const styles = StyleSheet.create({
   titles: {
     width: '100%',
     alignItems: 'center',
-    //backgroundColor: '#d12a3b'
+  // backgroundColor: '#d12a3b'
   },
 
   title: {
-    fontSize: 40,
-    fontWeight: '700',
+    fontSize: 50,
+    fontWeight: '900',
     color: 'white'
   },
-  
+
   subtitle: {
-    fontSize: 16,
+    fontSize: 25,
     color: 'white',
     fontWeight: '700'
   },
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   },
 
   importantText: {
-    marginTop: '10%',
+    marginTop: '5%',
     width: '100%',
     alignItems: 'center'
   },
@@ -85,12 +86,12 @@ const styles = StyleSheet.create({
   instruction: {
     fontSize: 30,
     fontWeight: '700',
-    color: 'white',
-    marginTop: 27
+    color: 'black',
+    marginTop: 10
   },
 
   button: {
-    marginTop: '60%',
+    marginTop: '10%',
     alignItems: 'center',
     color: '#000000'
   }

@@ -20,8 +20,9 @@ export default class Join extends React.Component {
           <ScrollView>
             
             <View style={styles.titles}>
-              <Text style={styles.title}>Guess Your Friends</Text>
-              <Text style={styles.subtitle}>Placeholder</Text>
+              <Text style={styles.title}>Guess Your</Text>
+              <Text style={styles.title}>Friends</Text>
+              <Text style={styles.subtitle}>Let's get Judgy</Text>
             </View>
 
             
@@ -65,25 +66,26 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  titles: {
-    width: '100%',
-    alignItems: 'center',
-    //backgroundColor: '#d12a3b'
-  },
   button1: {
     marginTop: '80%',
     alignItems: 'center',
     color: '#000000'
 },
 
+  titles: {
+    width: '100%',
+    alignItems: 'center',
+  // backgroundColor: '#d12a3b'
+  },
+
   title: {
-    fontSize: 40,
-    fontWeight: '700',
+    fontSize: 50,
+    fontWeight: '900',
     color: 'white'
   },
-  
+
   subtitle: {
-    fontSize: 16,
+    fontSize: 25,
     color: 'white',
     fontWeight: '700'
   },
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
   instruction: {
     fontSize: 30,
     fontWeight: '700',
-    color: 'white',
-    marginTop: 27
+    color: 'black',
+    marginTop: 20
   }
 });
