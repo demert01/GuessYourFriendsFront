@@ -113,11 +113,17 @@ class Waiting extends React.Component {
                         style={styles.image}
                     />
 
+                <View style={styles.titles}>
+                    <Text style={styles.title}>Guess Your</Text>
+                    <Text style={styles.title}>Friends</Text>
+                    <Text style={styles.subtitle}>Let's Get Judgy</Text>
+                </View>
+
                     <View>
                         {
                             this.props.route.params.isHost ?
                             <View style={styles.importantText}>
-                                <Text style={styles.instruction}>Start the game when ready</Text>
+                                <Text style={styles.instruction}>Start Game When Ready</Text>
                                 <Text style={styles.instruction}>Join Code: {this.props.route.params.lobbyCode || ""}</Text>
                             </View> :
                             <View style={styles.importantText}>
@@ -127,12 +133,6 @@ class Waiting extends React.Component {
                         }
                     </View>
 
-                    {this.state.loading &&
-                    <View style={styles.loading}>
-                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
-                        <ActivityIndicator/>
-                    </View>
-                    }
 
                     <ScrollView refreshControl={
                         <RefreshControl
@@ -143,10 +143,18 @@ class Waiting extends React.Component {
                         {
                             this.state.nicknames.map((item, index) => (
                                 <View key = {index} style = {styles.item}>
-                                    <Text style={{fontSize: 20, fontWeight: '600'}}>{item}</Text>
+                                    <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{item}</Text>
                                 </View>
                             ))
                         }
+
+                        {this.state.loading &&
+                        <View style={styles.loading}>
+                            <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                            <ActivityIndicator/>
+                        </View>
+                        }                    
+
                         {
                             this.props.route.params.isHost ?
                                 <View style={styles.button1}>
@@ -160,7 +168,7 @@ class Waiting extends React.Component {
                                                 this.setState({loading: false});
                                                 alert("Unable to start game");
                                             });
-                                    }} text='Start Game' color='#d12a3b' />
+                                    }} text='Start Game' color='#ff2e63' />
                                 </View>
                                 :
                                 null
@@ -189,23 +197,21 @@ const styles = StyleSheet.create({
     },
 
     titles: {
-        marginTop: '22%',
         width: '100%',
         alignItems: 'center',
-       // backgroundColor: '#d12a3b'
-    },
-
+      },
+    
     title: {
-        fontSize: 30,
-        fontWeight: '700',
+        fontSize: 50,
+        fontWeight: '900',
         color: 'white'
-    },
-
+      },
+    
     subtitle: {
-        fontSize: 16,
+        fontSize: 25,
         color: 'white',
         fontWeight: '700'
-    },
+      },
 
     image: {
         width: '100%',
@@ -214,44 +220,34 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
 
-    crest: {
-        width: '100%',
-        height: '20%',
-        resizeMode: 'contain',
-        marginTop: '10%'
-        //position: 'absolute',
-
-    },
-
     importantText: {
         marginTop: '5%',
         width: '100%',
         alignItems: 'center'
       },
     
-      instruction: {
+    instruction: {
         fontSize: 30,
-        fontWeight: '700',
-        color: 'white',
+        fontWeight: '800',
+        width: 450,
+        color: 'black',
         marginTop: 35,
-        textAlign: 'center'
-      },
-    loadingText:  {
-        fontSize: 18,
-        fontWeight: '700',
-        color: 'white',
-        marginTop: 5,
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingHorizontal: 20
     },
+
     item: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        padding: 30,
-        margin: 2,
-        borderColor: '#2a4944',
-        borderWidth: 1,
-        backgroundColor: '#d2f7f1'
+        padding: 15,
+        marginHorizontal: 30,
+        marginTop: 10,
+        marginBottom: 5,
+        borderColor: '#000000',
+        borderWidth: 5,
+        backgroundColor: '#ff2e63',
+        borderRadius: 30
     },
     button1: {
         marginTop: '20%',
@@ -263,11 +259,18 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         bottom: 0,
-        opacity: 0.5,
-        backgroundColor: 'black',
+       // opacity: 0.5,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+
+    loadingText:  {
+        fontSize: 25,
+        fontWeight: '800',
+        color: 'black',
+        marginTop: 5,
+        textAlign: 'center'
+    },
 
 });
 

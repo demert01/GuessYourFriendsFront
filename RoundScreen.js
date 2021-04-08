@@ -43,21 +43,18 @@ class RoundScreen extends React.Component {
                     </View>
 
                     <View style={styles.importantText}>
-                        <Text style={styles.instruction2}>Select the Player that best meets each prompt!</Text>
+                        <Text style={styles.instruction2}>Choose The Player That Best Meets Each Prompt!</Text>
                     </View>
-
-                    {this.state.loading &&
-                    <View style={styles.loading}>
-                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
-                        <ActivityIndicator/>
-                    </View>
-                    }
 
                     <View style={styles.clockContainer}>
                         <CountdownCircleTimer
                             isPlaying={this.state.isReady}
                             duration={15}
-                            colors="#004777"
+                            colors='#ff2e63'
+                            trailColor='#ffffff'
+                            strokeWidth='10'
+                            strokeLinecap='round'
+                            ariaLabel='hi'
                             onComplete={() => {
                                 navigate('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
                                     deviceId: this.props.route.params.deviceId})}
@@ -70,7 +67,14 @@ class RoundScreen extends React.Component {
                                 </Animated.Text>
                             )}
                         </CountdownCircleTimer>
-                    </View>           
+                    </View>
+
+                    {this.state.loading &&
+                    <View style={styles.loading}>
+                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                        <ActivityIndicator/>
+                    </View>
+                    }           
 
                 </View>
                 <StatusBar style="auto" />
@@ -93,32 +97,20 @@ const styles = StyleSheet.create({
         height: '100%',
     },
 
-    buttons: {
-        marginTop: '10%',
-        alignItems: 'center',
-    },
-
-    button2: {
-        marginTop: '5%',
-        alignItems: 'center',
-
-    },
-
     titles: {
         width: '100%',
         alignItems: 'center',
-
     },
-
+    
     title: {
-        fontSize: 35,
-        fontWeight: '800',
-        color: 'white',
+        fontSize: 50,
+        fontWeight: '900',
+        color: '#ffffff',
         textAlign: 'center'
-    },
-
+      },
+    
     subtitle: {
-        fontSize: 16,
+        fontSize: 25,
         color: 'white',
         fontWeight: '700'
       },
@@ -140,49 +132,51 @@ const styles = StyleSheet.create({
     instruction: {
         fontSize: 35,
         fontWeight: '800',
-        color: 'white',
-        marginTop: 27,
-        alignItems: 'center'
+        color: 'black',
+        marginTop: '5%',
+        alignItems: 'center',
+        textAlign: 'center'
       },
 
     instruction2: {
         fontSize: 25,
-        fontWeight: '700',
-        color: 'white',
+        fontWeight: '800',
+        color: 'black',
         marginTop: 30,
-        alignItems: 'center'
+        alignItems: 'center',
+        textAlign: 'center',
+        marginHorizontal: 20
       },
 
     clockContainer: {
-        flex: 1,
+        marginTop: '40%',
         justifyContent: 'center',
         alignItems: 'center',
-       // paddingTop: '5%',
-        //backgroundColor: '#ecf0f1',
-        padding: 8,
+        padding: 0,
     },
 
     remainingTime: {
         fontSize: 46,
     },
-    loadingText:  {
-        fontSize: 18,
-        fontWeight: '700',
-        color: 'white',
-        marginTop: 5,
-        textAlign: 'center'
-    },
+    
     loading: {
         position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
         bottom: 0,
-        opacity: 0.5,
-        backgroundColor: 'black',
+       // opacity: 0.5,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+
+    loadingText:  {
+        fontSize: 25,
+        fontWeight: '800',
+        color: 'black',
+        marginTop: 5,
+        textAlign: 'center'
+    },
 });
 
 export default RoundScreen

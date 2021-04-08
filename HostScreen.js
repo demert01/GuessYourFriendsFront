@@ -21,11 +21,7 @@ export default class HostScreen extends React.Component {
               <View style={styles.titles}>
                 <Text style={styles.title}>Guess Your</Text>
                 <Text style={styles.title}>Friends</Text>
-                <Text style={styles.subtitle}>Placeholder</Text>
-              </View>
-
-              <View style={styles.importantText}>
-                <Text style={styles.instruction}>Your Lobby Code:</Text>
+                <Text style={styles.subtitle}>Let's Get Judgy</Text>
               </View>
 
               <HostScreenInput navigation ={this.props.navigation}/>

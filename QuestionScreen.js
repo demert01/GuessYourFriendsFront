@@ -173,24 +173,25 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center'
       },
-    loadingText:  {
-        fontSize: 18,
-        fontWeight: '700',
-        color: 'white',
-        marginTop: 5,
-        textAlign: 'center'
-    },
+
     loading: {
         position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
         bottom: 0,
-        opacity: 0.5,
-        backgroundColor: 'black',
+       // opacity: 0.5,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+
+    loadingText:  {
+        fontSize: 25,
+        fontWeight: '800',
+        color: 'black',
+        marginTop: 5,
+        textAlign: 'center'
+    },
 
 });
 export default QuestionScreen

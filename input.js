@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, View, Text, TouchableOpacity, TextInput, StyleSheet,} from 'react-native';
 import GameAPI from './API/Game/GameAPI'
+import ButtonWithBackground from "./button";
 
 class Input extends Component {
     state = {
@@ -57,16 +58,11 @@ class Input extends Component {
                     color="black"
                     onChangeText={this.handleNickname}
                 />
-
-                <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={
-                        () => {
-                            this.navigateToWait();
-                        }
-                    }>
-                    <Text style={styles.submitButtonText}> Enter Lobby </Text>
-                </TouchableOpacity>
+                <View style={styles.button}>
+                    <ButtonWithBackground onPress={() => {
+                        this.navigateToWait();
+                    }} text='Enter Lobby' color='#ff2e63'/>
+                </View>
             </View>
         );
     }
@@ -114,5 +110,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 25,
         fontWeight: '800'
-    }
+    },
+    button: {
+        marginTop: '10%',
+        alignItems: 'center',
+        color: '#000000'
+    },
 })
