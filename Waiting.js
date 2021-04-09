@@ -131,29 +131,6 @@ class Waiting extends React.Component {
                                 <Text style={styles.instruction}>Join Code: {this.props.route.params.lobbyCode || ""}</Text>
                             </View>
                         }
-                    </View>
-
-
-                    <ScrollView refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.refreshing}
-                            onRefresh={this._onRefresh}
-                        />
-                    }>
-                        {
-                            this.state.nicknames.map((item, index) => (
-                                <View key = {index} style = {styles.item}>
-                                    <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{item}</Text>
-                                </View>
-                            ))
-                        }
-
-                        {this.state.loading &&
-                        <View style={styles.loading}>
-                            <Text style={styles.loadingText}>Waiting for Other Players</Text>
-                            <ActivityIndicator/>
-                        </View>
-                        }                    
 
                         {
                             this.props.route.params.isHost ?
@@ -173,6 +150,32 @@ class Waiting extends React.Component {
                                 :
                                 null
                         }
+
+                    </View>
+
+
+                    <ScrollView refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this._onRefresh}
+                        />
+                    }>
+                                         
+                        {
+                            this.state.nicknames.map((item, index) => (
+                                <View key = {index} style = {styles.item}>
+                                    <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{item}</Text>
+                                </View>
+                            ))
+                        }
+
+                        {this.state.loading &&
+                        <View style={styles.loading}>
+                            <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                            <ActivityIndicator/>
+                        </View>
+                        }
+
                     </ScrollView>
                 </View>
                 <StatusBar style="auto" />
@@ -230,8 +233,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '800',
         width: 450,
-        color: 'black',
-        marginTop: 35,
+        color: 'white',
+        marginTop: 15,
         textAlign: 'center',
         paddingHorizontal: 20
     },
@@ -242,7 +245,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 15,
         marginHorizontal: 30,
-        marginTop: 10,
+        marginTop: 15,
         marginBottom: 5,
         borderColor: '#000000',
         borderWidth: 5,
@@ -250,7 +253,7 @@ const styles = StyleSheet.create({
         borderRadius: 30
     },
     button1: {
-        marginTop: '20%',
+        marginTop: '0%',
         alignItems: 'center',
     },
     loading: {
