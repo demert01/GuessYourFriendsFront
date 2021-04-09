@@ -48,7 +48,7 @@ class QuestionScreen extends React.Component {
                                 let currQuestion = this.state.currQuestionNumber;
                                 currQuestion = currQuestion + 1;
                                 this.setState({waitingForNext: false, currQuestionNumber: currQuestion, disableButtons: false, makingAPICall: false})
-                            }, new Date(game.nextQuestionStartTime).getTime() - new Date().getTime());
+                            }, new Date(game.nextQuestionStartTime).getTime() - new Date().getTime() > 0 ? new Date(game.nextQuestionStartTime).getTime() - new Date().getTime() : 100);
                         } else {
                             this.setState({makingAPICall: false});
                         }

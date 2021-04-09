@@ -18,7 +18,7 @@ class RoundScreen extends React.Component {
         this.interval = setInterval(() => {
             clearInterval(this.interval);
             this.setState({loading: false, isReady: true})
-        }, new Date(this.props.route.params.gameStartTime).getTime() - new Date().getTime());
+        }, new Date(this.props.route.params.gameStartTime).getTime() - new Date().getTime() > 0 ? new Date(this.props.route.params.gameStartTime).getTime() - new Date().getTime() : 100);
     }
 
     // Round Screen gives quick briefing before navigating to question screen
