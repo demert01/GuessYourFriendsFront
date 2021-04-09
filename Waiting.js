@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
     titles: {
         width: '100%',
         alignItems: 'center',
+        marginTop: '20%'
       },
     
     title: {

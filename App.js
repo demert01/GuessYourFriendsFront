@@ -21,11 +21,11 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="HostScreen" component={HostScreen} options={{ headerShown: true }} />
           <Stack.Screen name="Join" component={Join} options={{ headerShown: true }} />
-            <Stack.Screen name="RoundScreen" component={RoundScreen} options={{ headerShown: true }} />
-            <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: true }} />
-          <Stack.Screen name="RoundResults" component={RoundResults} options={{ headerShown: true }} />
-          <Stack.Screen name="GameResults" component={GameResults} options={{ headerShown: true }} />
-          <Stack.Screen name="Waiting" component={Waiting} options={{ headerShown: true }} />
+            <Stack.Screen name="RoundScreen" component={RoundScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="RoundResults" component={RoundResults} options={{ headerShown: false }} />
+          <Stack.Screen name="GameResults" component={GameResults} options={{ headerShown: false }} />
+          <Stack.Screen name="Waiting" component={Waiting} options={{ headerShown: false }} />
 
         </Stack.Navigator>
       </NavigationContainer>

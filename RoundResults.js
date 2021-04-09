@@ -14,7 +14,9 @@ class QuestionScreen extends React.Component {
             disableButtons: false,
             loading: false,
             makingAPICall: false,
-            waitingForNext: false
+            waitingForNext: false,
+            assembledQuestionAndVotes: null
+
         }
     }
 

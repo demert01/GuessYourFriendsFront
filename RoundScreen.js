@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, Animated, ActivityIndicator} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, Animated, ActivityIndicator, ScrollView} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
@@ -38,36 +38,38 @@ class RoundScreen extends React.Component {
                         <Text style={styles.subtitle}>Lets Get Judgy</Text>
                     </View>
 
-                    <View style={styles.importantText}>
-                        <Text style={styles.instruction}>Welcome to Round 1</Text>
-                    </View>
+                    <ScrollView>
+                        <View style={styles.importantText}>
+                            <Text style={styles.instruction}>Welcome to Round 1</Text>
+                        </View>
 
-                    <View style={styles.importantText}>
-                        <Text style={styles.instruction2}>Choose The Player That Best Meets Each Prompt!</Text>
-                    </View>
+                        <View style={styles.importantText}>
+                            <Text style={styles.instruction2}>Choose The Player That Best Meets Each Prompt!</Text>
+                        </View>
 
-                    <View style={styles.clockContainer}>
-                        <CountdownCircleTimer
-                            isPlaying={this.state.isReady}
-                            duration={15}
-                            colors='#ff2e63'
-                            trailColor='#ffffff'
-                            strokeWidth='10'
-                            strokeLinecap='round'
-                            ariaLabel='hi'
-                            onComplete={() => {
-                                navigate('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
-                                    deviceId: this.props.route.params.deviceId})}
-                            }
-                        >
-                            {({ remainingTime, animatedColor }) => (
-                                <Animated.Text
-                                    style={{ ...styles.remainingTime, color: animatedColor }}>
-                                    {remainingTime}
-                                </Animated.Text>
-                            )}
-                        </CountdownCircleTimer>
-                    </View>
+                        <View style={styles.clockContainer}>
+                            <CountdownCircleTimer
+                                isPlaying={this.state.isReady}
+                                duration={15}
+                                colors='#ff2e63'
+                                trailColor='#ffffff'
+                                strokeWidth='10'
+                                strokeLinecap='round'
+                                ariaLabel='hi'
+                                onComplete={() => {
+                                    navigate('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
+                                        deviceId: this.props.route.params.deviceId})}
+                                }
+                            >
+                                {({ remainingTime, animatedColor }) => (
+                                    <Animated.Text
+                                        style={{ ...styles.remainingTime, color: animatedColor }}>
+                                        {remainingTime}
+                                    </Animated.Text>
+                                )}
+                            </CountdownCircleTimer>
+                        </View>
+                    </ScrollView>
 
                     {this.state.loading &&
                     <View style={styles.loading}>
@@ -100,6 +102,7 @@ const styles = StyleSheet.create({
     titles: {
         width: '100%',
         alignItems: 'center',
+        marginTop: '20%'
     },
     
     title: {
