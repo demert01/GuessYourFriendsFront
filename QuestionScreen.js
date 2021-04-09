@@ -45,9 +45,14 @@ class QuestionScreen extends React.Component {
                             // Show next question
                             this.interval = setInterval(() => {
                                 clearInterval(this.interval);
-                                let currQuestion = this.state.currQuestionNumber;
-                                currQuestion = currQuestion + 1;
-                                this.setState({waitingForNext: false, currQuestionNumber: currQuestion, disableButtons: false, makingAPICall: false})
+                                let currQuestion = this.state.currQuestionNumber + 1;
+                                if (currQuestion % 5 === 0 && currQuestion !== 0) {
+                                    const { navigate } = this.props.navigation;
+                                    navigate('RoundResults', {currRoundNumber: 1, questions: this.props.route.params.questions, votesByQuestion: game.votesByQuestion, deviceIds: game.deviceIds})
+                                } else {
+                                    currQuestion = currQuestion;
+                                    this.setState({waitingForNext: false, currQuestionNumber: currQuestion, disableButtons: false, makingAPICall: false})
+                                }
                             }, new Date(game.nextQuestionStartTime).getTime() - new Date().getTime() > 0 ? new Date(game.nextQuestionStartTime).getTime() - new Date().getTime() : 100);
                         } else {
                             this.setState({makingAPICall: false});

@@ -4,26 +4,56 @@ import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 const GameAPI = require('./API/Game/GameAPI');
 
-class QuestionScreen extends React.Component {
+class RoundResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currQuestionNumber: 0,
-            currRoundNumber: 1,
+            currRoundNumber: this.props.route.params.currRoundNumber,
             //players: this.props.route.params.players,
             disableButtons: false,
             loading: false,
             makingAPICall: false,
             waitingForNext: false,
-            assembledQuestionAndVotes: null
-
+            assembledQuestionAndVotes: [],
+            currQuestionNumber: this.props.route.params.currQuestionNumber,
+            votesByQuestion: this.props.route.params.votesByQuestion,
+            deviceIds: this.props.route.params.deviceIds
         }
     }
 
-    checkRoundNumber(){
-        if(this.state.currQuestionNumber % 5 == 0 && this.state.currQuestionNumber != 0){
-            this.state.currRoundNumber = this.state.currRoundNumber + 1;
+    getVotes = (deviceId, questionNumber) => {
+        let voteCount = 0;
+        for(let i = 0; i<this.state.votesByQuestion.length; i++) {
+            if(questionNumber === this.state.votesByQuestion[i].questionNumber && deviceId === this.state.votesByQuestion[i].votedFor) {
+                voteCount += 1;
+            }
         }
+        return voteCount;
+    };
+
+    populateAssembled(){
+        if(this.state.assembledQuestionAndVotes !== []) {
+            let voteTotals = [];
+            for(let i = 0; i < 5; i++) {
+                let voteInfo = [];
+                const questionNumber = ((i + 1) * this.state.currRoundNumber);
+                for(let x = 0; x < this.state.deviceIds.length; x++) {
+                    const totalForPerson = this.getVotes(this.state.deviceIds[x], questionNumber - 1);
+                    voteInfo.push({deviceId: this.state.deviceIds[x], voteTotal: totalForPerson});
+                }
+                let assembledObject = {
+                    questionNumber: "" + questionNumber,
+                    voteTotals: voteInfo
+                };
+                voteTotals.push(assembledObject);
+            }
+            console.log(voteTotals);
+            this.setState({assembledQuestionAndVotes: voteTotals});
+        }
+    }
+
+    componentDidMount() {
+        this.populateAssembled();
     }
 
     // Round Results will display the results for each qeustion
@@ -38,42 +68,24 @@ class QuestionScreen extends React.Component {
 
                 <View style={styles.questionContainer}>   
                     <View style={styles.titles}>
-                        {/* Must increment round every every time questionNumber % 5 == 0 */}
-                            {this.checkRoundNumber()}
-                            <Text style={styles.title}>Round {this.state.currRoundNumber}</Text>
+                            <Text style={styles.title}>Round 1</Text>
                         </View>
 
-                    
-                    <View style={styles.titles2}>
-                        <Text style={styles.instruction}>Results from Question {this.state.currQuestionNumber + 1}</Text>
-                    </View>
 
-                    <View style={styles.importantText}>
-                        <Text style={styles.question}>Display Question Here</Text>
-                    </View>
-
-                    <ScrollView refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.refreshing}
-                            onRefresh={this._onRefresh}
-                        />
-                    }>
-                        {/*{ This will display the players in the game along with their respective vote counts for a question
-                            this.state.nicknames.map((item, index) => (
+                    <ScrollView>
+                        {
+                            this.state.assembledQuestionAndVotes.map((item, index) => (
                                 <View key = {index} style = {styles.item}>
-                                    <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{item}</Text>
+                                    <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{this.props.route.params.questions[item.questionNumber - 1].questionContent}</Text>
+                                    {
+                                        item.voteTotals.map((total) => (
+                                           <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{total.deviceId + ": " + total.voteTotal}</Text>
+                                        ))
+                                    }
                                 </View>
                             ))
                         }
-                    */}
-                     </ScrollView>
-
-                        {this.state.loading &&
-                        <View style={styles.loading}>
-                            <Text style={styles.loadingText}>Waiting for Other Players</Text>
-                            <ActivityIndicator/>
-                        </View>
-                        }
+                    </ScrollView>
 
                 </View>
 
@@ -178,4 +190,4 @@ const styles = StyleSheet.create({
     },
 
 });
-export default QuestionScreen
+export default RoundResults

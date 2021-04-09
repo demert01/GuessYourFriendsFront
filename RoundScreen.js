@@ -50,7 +50,7 @@ class RoundScreen extends React.Component {
                         <View style={styles.clockContainer}>
                             <CountdownCircleTimer
                                 isPlaying={this.state.isReady}
-                                duration={15}
+                                duration={5}
                                 colors='#ff2e63'
                                 trailColor='#ffffff'
                                 strokeWidth='10'
