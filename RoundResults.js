@@ -69,20 +69,23 @@ class RoundResults extends React.Component {
                 <View style={styles.questionContainer}>   
                     <View style={styles.titles}>
                             <Text style={styles.title}>Round 1</Text>
-                        </View>
+                    </View>
 
 
                     <ScrollView>
                         {
                             this.state.assembledQuestionAndVotes.map((item, index) => (
                                 <View key = {index} style = {styles.item}>
-                                    <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{this.props.route.params.questions[item.questionNumber - 1].questionContent}</Text>
+                                    <Text style={{fontSize: 35, fontWeight: '800', color: 'white', textAlign: 'center'}}>Question {item.questionNumber} {'\n'} {this.props.route.params.questions[item.questionNumber - 1].questionContent}</Text>
                                     {
                                         item.voteTotals.map((total) => (
-                                           <Text style={{fontSize: 25, fontWeight: '800', color: 'white'}}>{total.deviceId + ": " + total.voteTotal}</Text>
+                                            <View key = {index} style = {styles.item2}>
+                                                <Text style={{fontSize: 25, fontWeight: '800', color: 'white', textAlign: 'left'}}>{total.voteTotal + " Voted For " + total.deviceId}</Text>
+                                           </View>
                                         ))
                                     }
                                 </View>
+                                
                             ))
                         }
                     </ScrollView>
@@ -111,28 +114,16 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 
-    buttons: {
-        marginTop: '10%',
-        alignItems: 'center',
-        height: '100%'
-    },
-
     titles: {
         width: '100%',
         alignItems: 'center',
-        paddingTop: 10
-    },
-
-    titles2: {
-        width: '100%',
-        alignItems: 'center',
-        marginTop: 20
+        marginTop: '15%',
     },
 
     title: {
         fontSize: 35,
         fontWeight: '900',
-        color: 'white',
+        color: '#ff2e63',
         textAlign: 'center'
     },
 
@@ -149,26 +140,30 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
 
-    importantText: {
-        marginTop: '20%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center'
-      },
-    
-    instruction: {
-        fontSize: 30,
-        fontWeight: '800',
-        color: 'white',
-        textAlign: 'center'
-      },
+    item: {
+        justifyContent: 'center',
+        //alignItems: 'center',
+        padding: 5,
+        marginHorizontal: 5,
+        marginTop: '5%',
+        borderColor: '#000000',
+       // borderWidth: 5,
+        //backgroundColor: '#ff2e63',
+        borderRadius: 30
+    },
 
-    question: {
-        fontSize: 30,
-        fontWeight: '800',
-        color: 'white',
-        textAlign: 'center'
-      },
+    item2: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 15,
+        marginHorizontal: 20,
+        marginTop: '5%',
+        marginBottom: 5,
+        borderColor: '#000000',
+        borderWidth: 5,
+        backgroundColor: '#ff2e63',
+        borderRadius: 30
+    },
 
     loading: {
         position: 'absolute',
