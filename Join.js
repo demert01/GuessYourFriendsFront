@@ -26,12 +26,9 @@ export default class Join extends React.Component {
             </View>
 
             
-
             <View style={styles.importantText}>
               <Text style={styles.instruction}>Type in the Game Code</Text>
             </View>
-
-
 
             <Input navigation={this.props.navigation}/>
 
@@ -75,7 +72,6 @@ const styles = StyleSheet.create({
   titles: {
     width: '100%',
     alignItems: 'center',
-  // backgroundColor: '#d12a3b'
   },
 
   title: {
@@ -105,8 +101,8 @@ const styles = StyleSheet.create({
 
   instruction: {
     fontSize: 30,
-    fontWeight: '700',
-    color: 'black',
+    fontWeight: '800',
+    color: 'white',
     marginTop: 20
   }
 });

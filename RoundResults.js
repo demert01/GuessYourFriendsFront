@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 35,
         fontWeight: '900',
-        color: '#ff2e63',
+        color: 'white',
         textAlign: 'center'
     },
 
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     loadingText:  {
         fontSize: 25,
         fontWeight: '800',
-        color: 'black',
+        color: 'white',
         marginTop: 5,
         textAlign: 'center'
     },

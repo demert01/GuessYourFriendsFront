@@ -70,9 +70,9 @@ class HostScreenInput extends Component {
                 <TextInput style={styles.input}
                            underlineColorAndroid="transparent"
                            placeholder="Enter Your Nickname"
-                           placeholderTextColor="black"
+                           placeholderTextColor="white"
                            autoCapitalize="none"
-                           color="black"
+                           color="white"
                            onChangeText={this.handleUsername}/>
                 <QuestionSelections 
                  navigation ={this.props.navigation}
@@ -98,28 +98,16 @@ const styles = StyleSheet.create({
         height: 60,
         width: 350,
         margin: 30,
-        borderColor: '#ff2e63',
-        borderWidth: 5,
-        borderRadius: 25,
-        textAlign: 'center',
-        fontSize: 25,
-        fontWeight: '800'
-        
-    },
-    submitButton: {
+        borderColor: 'black',
         backgroundColor: '#ff2e63',
-        //padding: 10,
-        margin: 15,
-        height: 50,
-        borderRadius: 36,
+        borderWidth: 5,
+        //borderRadius: 25,
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: '800'
         
     },
-    submitButtonText: {
-        color: 'white',
-        textAlign: 'center',
-        fontSize: 25,
-        fontWeight: '800'
-    },
+    
     button: {
         marginTop: '40%',
         alignItems: 'center',

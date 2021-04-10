@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     loadingText:  {
         fontSize: 25,
         fontWeight: '800',
-        color: 'black',
+        color: 'white',
         marginTop: 5,
         textAlign: 'center'
     },

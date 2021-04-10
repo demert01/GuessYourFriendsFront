@@ -34,8 +34,7 @@ class QuestionsSelections extends React.Component{
 			this.props.selectQuestionSet(itemValue);
 			this.setState({PickerValue: itemValue});
 		}}
-		itemStyle={{color: "black", fontSize: 25, fontWeight: '800'}}
-		
+		itemStyle={{color: "white", label: 'black', fontSize: 30, fontWeight: '800'}}
 		>
 			{
 				this.state.questionSets.map((item, index) => (

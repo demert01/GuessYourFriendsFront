@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         borderRadius: 36,
         marginTop: '5%',
         padding: 18,
-        width: 250,
+        width: 275,
         alignItems: 'center',
         borderColor: 'black',
         borderWidth: 5,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: '900',
         textTransform: 'uppercase',
-        fontSize: 25,
+        fontSize: 30,
         textAlign: 'center',
     }
 });

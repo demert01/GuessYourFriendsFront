@@ -101,7 +101,7 @@ class QuestionScreen extends React.Component {
 
                     </View>
 
-                    <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.loading}/>
+                    <ActivityIndicator size='large' color="white" animating={this.state.loading}/>
                     {this.state.waitingForNext &&
                     <View style={styles.loading}>                        
                         <Text style={styles.loadingText}>Waiting for Other Players</Text>                       
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     loadingText:  {
         fontSize: 25,
         fontWeight: '800',
-        color: 'black',
+        color: 'white',
         marginTop: 5,
         textAlign: 'center'
     },

@@ -50,7 +50,7 @@ class RoundScreen extends React.Component {
                         <View style={styles.clockContainer}>
                             <CountdownCircleTimer
                                 isPlaying={this.state.isReady}
-                                duration={5}
+                                duration={10}
                                 colors='#ff2e63'
                                 trailColor='#ffffff'
                                 strokeWidth='10'
@@ -133,18 +133,18 @@ const styles = StyleSheet.create({
       },
     
     instruction: {
-        fontSize: 35,
-        fontWeight: '800',
-        color: 'black',
+        fontSize: 30,
+        fontWeight: '900',
+        color: 'white',
         marginTop: '5%',
         alignItems: 'center',
         textAlign: 'center'
       },
 
     instruction2: {
-        fontSize: 25,
-        fontWeight: '800',
-        color: 'black',
+        fontSize: 30,
+        fontWeight: '900',
+        color: 'white',
         marginTop: 30,
         alignItems: 'center',
         textAlign: 'center',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
       },
 
     clockContainer: {
-        marginTop: '40%',
+        marginTop: '20%',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 0,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     loadingText:  {
         fontSize: 25,
         fontWeight: '800',
-        color: 'black',
+        color: 'white',
         marginTop: 5,
         textAlign: 'center'
     },

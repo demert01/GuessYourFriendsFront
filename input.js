@@ -43,9 +43,9 @@ class Input extends Component {
                     style={styles.input1}
                     underlineColorAndroid="transparent"
                     placeholder="Enter Join Code"
-                    placeholderTextColor="black"
+                    placeholderTextColor="white"
                     autoCapitalize="none"
-                    color="black"
+                    color="white"
                     onChangeText={this.handleCode}
                 />
 
@@ -53,9 +53,9 @@ class Input extends Component {
                     style={styles.input2}
                     underlineColorAndroid="transparent"
                     placeholder="Enter Your Nickname"
-                    placeholderTextColor="black"
+                    placeholderTextColor="white"
                     autoCapitalize="none"
-                    color="black"
+                    color="white"
                     onChangeText={this.handleNickname}
                 />
                 <View style={styles.button}>
@@ -79,22 +79,24 @@ const styles = StyleSheet.create({
         margin: 30,
         height: 60,
         width: 350,
-        borderColor: '#ff2e63',
+        borderColor: 'black',
+        backgroundColor: '#ff2e63',
         borderWidth: 5,
-        borderRadius: 25,
+        //borderRadius: 25,
         textAlign: 'center',
-        fontSize: 25,
+        fontSize: 30,
         fontWeight: '800'
     },
     input2: {
         margin: 0,
         height: 60,
         width: 350,
-        borderColor: '#ff2e63',
+        borderColor: 'black',
+        backgroundColor: '#ff2e63',
         borderWidth: 5,
-        borderRadius: 25,
+        //borderRadius: 25,
         textAlign: 'center',
-        fontSize: 25,
+        fontSize: 30,
         fontWeight: '800'
     },
     submitButton: {
