@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
         marginTop: '22%',
         width: '100%',
         alignItems: 'center',
-       // backgroundColor: '#d12a3b'
     },
 
     title: {
@@ -107,8 +106,6 @@ const styles = StyleSheet.create({
         height: '20%',
         resizeMode: 'contain',
         marginTop: '10%'
-        //position: 'absolute',
-
     }
 
 });
