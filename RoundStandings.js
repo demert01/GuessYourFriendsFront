@@ -57,7 +57,7 @@ class RoundStandings extends React.Component {
         }
         
         // Iterate through all votes and find the Highest Point Total
-        let maxVoteGetter = "";
+        let maxVoteGetters = [];
         let maxValue = 0;
         for(let j = 0; j < allVotes.length; j++){   
             if(allVotes[j].points > maxValue){
@@ -66,13 +66,14 @@ class RoundStandings extends React.Component {
         }
 
         this.state.highestScore = maxValue;
-        // return the highest voted player
+        // return the highest voted players
         for(let x = 0; x < allVotes.length; x++){   
             if(allVotes[x].points === maxValue){
-                return allVotes[x].playerVoted;
+                maxVoteGetters.push(allVotes[x].playerVoted);
             }
-        } 
-    }
+        }
+        return maxVoteGetters
+    };
 
     // This function retrieves the players score for a given ID
     getPlayerScore = (deviceId) => {
@@ -83,9 +84,9 @@ class RoundStandings extends React.Component {
             if(deviceId === this.state.votesByQuestion[i].voter){
                 // If that player voted for the player with the most votes, they earn a point
                 // NOTE* THIS DOES NOT ACCOUNT FOR TIES, ONLY THE FIRST PLAYER IN AN ARRAY WITH MAX POINTS FOR A QUESTION
-                if(this.state.votesByQuestion[i].votedFor === this.findTopVoteGetter(i)){      
+                if(this.findTopVoteGetter(i).includes(this.state.votesByQuestion[i].votedFor)) {
                     points += 1;
-                }    
+                }
             }
         }
         return points;
