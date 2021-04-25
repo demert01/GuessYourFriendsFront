@@ -94,7 +94,7 @@ class RoundResults extends React.Component {
 
                     <View style={styles.button1}>
                         <ButtonWithBackground onPress={() => {navigate('RoundStandings', {currRoundNumber: 1, questions: this.props.route.params.questions, 
-                            votesByQuestion: this.props.route.params.votesByQuestion, deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.props.route.params.assembledQuestionAndVotes})}} text='View Standings' color = '#ff2e63'/>        
+                            votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes})}} text='View Standings' color = '#ff2e63'/>
                     </View>
 
                 </View>

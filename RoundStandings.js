@@ -22,57 +22,26 @@ class RoundStandings extends React.Component {
         }
     }
 
-    // This function finds the top vote getter for a given question
-    findTopVoteGetter = (questionNumber) => {     
-        let allVotes = [];
-
-        // Iterate through each player in the game
-        for(let i = 0; i < this.state.deviceIds.length; i++){
-
-            // Finds the current vote data within votesByQuestion
-            let currVotedFor =  this.state.votesByQuestion[questionNumber + i].votedFor
-            let votePerQuestion = {};
-
-            // Base case, no votes stored. Add data to object and push to array
-            if(allVotes.length === 0){      
-                votePerQuestion = {playerVoted: currVotedFor, points: 1, questionNum: questionNumber};
-                allVotes.push(votePerQuestion);
-            }
-            
-            else{ // allVotes has some data
-               
-                // Check if the name is not already stored
-                if(!allVotes.includes(votePerQuestion, 0)){
-                    votePerQuestion = {playerVoted: currVotedFor, points: 1, questionNum: questionNumber};
-                    allVotes.push(votePerQuestion);
+    shouldIncrement = (questionNumber, votedFor) => {
+        for(let i = 0; i<this.props.route.params.assembledQuestionAndVotes.length; i++) {
+            if(parseInt(this.props.route.params.assembledQuestionAndVotes[i].questionNumber) === questionNumber) {
+                let current_max = 0;
+                for(let x = 0; x<this.props.route.params.assembledQuestionAndVotes[i].voteTotals.length; x++) {
+                    if(this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].voteTotal > current_max) {
+                        current_max = this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].voteTotal;
+                    }
                 }
-
-                // Otherwise increment the point value
-                else{
-                  
-                    let index = allVotes.findIndex(votePerQuestion => votePerQuestion.playerVoted === currVotedFor);
-                    allVotes[index].points = allVotes[index].points + 1;
+                for(let x = 0; x<this.props.route.params.assembledQuestionAndVotes[i].voteTotals.length; x++) {
+                    if(this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].voteTotal >= current_max) {
+                        if(votedFor === this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].deviceId) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
-        
-        // Iterate through all votes and find the Highest Point Total
-        let maxVoteGetters = [];
-        let maxValue = 0;
-        for(let j = 0; j < allVotes.length; j++){   
-            if(allVotes[j].points > maxValue){
-                maxValue = allVotes[j].points
-            }
-        }
+        return false;
 
-        this.state.highestScore = maxValue;
-        // return the highest voted players
-        for(let x = 0; x < allVotes.length; x++){   
-            if(allVotes[x].points === maxValue){
-                maxVoteGetters.push(allVotes[x].playerVoted);
-            }
-        }
-        return maxVoteGetters
     };
 
     // This function retrieves the players score for a given ID
@@ -80,13 +49,14 @@ class RoundStandings extends React.Component {
         let points = 0;
         // Iterate through each question
         for(let i = 0; i < 5; i++){      
-            // If the current player is the voter
-            if(deviceId === this.state.votesByQuestion[i].voter){
-                // If that player voted for the player with the most votes, they earn a point
-                // NOTE* THIS DOES NOT ACCOUNT FOR TIES, ONLY THE FIRST PLAYER IN AN ARRAY WITH MAX POINTS FOR A QUESTION
-                if(this.findTopVoteGetter(i).includes(this.state.votesByQuestion[i].votedFor)) {
-                    points += 1;
+            let votedFor = "";
+            for(let x = 0; x < this.state.votesByQuestion.length; x++) {
+                if(this.state.votesByQuestion[x].questionNumber === i && this.state.votesByQuestion[x].voter === deviceId) {
+                    votedFor = this.state.votesByQuestion[x].votedFor
                 }
+            }
+            if(this.shouldIncrement(i + 1, votedFor)) {
+                points += 1;
             }
         }
         return points;
@@ -95,8 +65,7 @@ class RoundStandings extends React.Component {
     // This function calculates the total score of each player in the game
     calculateScores() {
         // Iterate through each player in the game
-        let scoreTotals = []
-        console.log("TEST");
+        let scoreTotals = [];
         for(let i = 0; i < this.state.deviceIds.length; i++){
             // Obtain score for a player
             let playerScore = this.getPlayerScore(this.state.deviceIds[i]);
@@ -113,13 +82,11 @@ class RoundStandings extends React.Component {
 
     componentDidMount() {
         this.calculateScores();
-        
     }
 
     // Round Results will display the results for each qeustion
     render() {
         const { navigate } = this.props.navigation;
-        console.log(this.state.scores);
         return (
             <View style={styles.container}>
                 <ImageBackground
