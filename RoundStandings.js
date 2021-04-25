@@ -42,7 +42,7 @@ class RoundStandings extends React.Component {
             else{ // allVotes has some data
                
                 // Check if the name is not already stored
-                if(!allVotes.includes(votesPerQuestion, 0)){
+                if(!allVotes.includes(votePerQuestion, 0)){
                     votePerQuestion = {playerVoted: currVotedFor, points: 1, questionNum: questionNumber};
                     allVotes.push(votePerQuestion);
                 }
@@ -57,7 +57,7 @@ class RoundStandings extends React.Component {
         }
         
         // Iterate through all votes and find the Highest Point Total
-        let maxVoteGetter = "";
+        let maxVoteGetters = [];
         let maxValue = 0;
         for(let j = 0; j < allVotes.length; j++){   
             if(allVotes[j].points > maxValue){
@@ -66,13 +66,14 @@ class RoundStandings extends React.Component {
         }
 
         this.state.highestScore = maxValue;
-        // return the highest voted player
+        // return the highest voted players
         for(let x = 0; x < allVotes.length; x++){   
             if(allVotes[x].points === maxValue){
-                return allVotes[x].playerVoted;
+                maxVoteGetters.push(allVotes[x].playerVoted);
             }
-        } 
-    }
+        }
+        return maxVoteGetters
+    };
 
     // This function retrieves the players score for a given ID
     getPlayerScore = (deviceId) => {
@@ -83,9 +84,9 @@ class RoundStandings extends React.Component {
             if(deviceId === this.state.votesByQuestion[i].voter){
                 // If that player voted for the player with the most votes, they earn a point
                 // NOTE* THIS DOES NOT ACCOUNT FOR TIES, ONLY THE FIRST PLAYER IN AN ARRAY WITH MAX POINTS FOR A QUESTION
-                if(this.state.votesByQuestion[i].votedFor === this.findTopVoteGetter(i)){      
+                if(this.findTopVoteGetter(i).includes(this.state.votesByQuestion[i].votedFor)) {
                     points += 1;
-                }    
+                }
             }
         }
         return points;
@@ -132,15 +133,12 @@ class RoundStandings extends React.Component {
 
                     <ScrollView>
                         {
-                            this.state.deviceIds.map((item, index) => (
-                                this.state.scores.map((players) => (
-                                    <View key = {index} style = {styles.item}> 
-                                        <Text style={styles.item2}>{players.player + ": "}</Text>
-                                        <Text style={styles.title}>{players.score}</Text>
-                                    </View>
-
-                                ))
-                             ))
+                            this.state.scores.map((players, index) => (
+                                <View key = {index} style = {styles.item}>
+                                    <Text style={styles.item2}>{players.player + ": "}</Text>
+                                    <Text style={styles.title}>{players.score}</Text>
+                                </View>
+                            ))
                         }
                     </ScrollView>
                 </View>
