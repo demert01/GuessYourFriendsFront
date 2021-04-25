@@ -16,10 +16,11 @@ class Home extends React.Component {
                         style={styles.image}
                     />
 
+
                     <View style={styles.titles}>
-                        <Text style={styles.title}>Guess Your </Text>
-                        <Text style={styles.title}>Friends</Text>
-                        <Text style={styles.subtitle}>Lets Get Judgy</Text>
+                        <Image style={styles.logo}
+                        source={require('./assets/NewLogo2.png')}
+                        />
                     </View>
 
                     
@@ -74,10 +75,9 @@ const styles = StyleSheet.create({
     },
 
     button3: {
-        
         fontSize: 40
-
     },
+
     titles: {
         marginTop: '22%',
         width: '100%',
@@ -101,6 +101,22 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'cover',
         position: 'absolute',
+    },
+
+    logoContainer: {
+        marginTop: '20%',
+        marginLeft: 5,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+        position: 'absolute',
+    },
+
+    logo: {
+       // width: '100%',
+      //  height: '100%',
+      //  resizeMode: 'cover',
+      //  position: 'absolute',
     },
 
     crest: {

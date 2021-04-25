@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator, Image} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 const GameAPI = require('./API/Game/GameAPI');
@@ -13,7 +13,7 @@ class QuestionScreen extends React.Component {
             disableButtons: false,
             loading: false,
             makingAPICall: false,
-            waitingForNext: false
+            waitingForNext: false,
         }
     }
 
@@ -80,7 +80,7 @@ class QuestionScreen extends React.Component {
 
 
                     <View style={styles.titles}>
-                        <Text style={styles.title}>Question {this.state.currQuestionNumber + 1}</Text>
+                        <Text style={styles.title}>QUESTION {this.state.currQuestionNumber + 1}</Text>
                     </View>
 
                     <View style={styles.importantText}>
@@ -103,9 +103,8 @@ class QuestionScreen extends React.Component {
 
                     <ActivityIndicator size='large' color="white" animating={this.state.loading}/>
                     {this.state.waitingForNext &&
-                    <View style={styles.loading}>                        
-                        <Text style={styles.loadingText}>Waiting for Other Players</Text>                       
-                        <ActivityIndicator/>
+                    <View style={styles.loading}>                                          
+                        <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.shouldShowActivityIndicator}/>
                     </View>
                     }
 

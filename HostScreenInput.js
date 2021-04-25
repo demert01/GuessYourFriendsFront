@@ -108,12 +108,6 @@ const styles = StyleSheet.create({
         fontWeight: '800'
         
     },
-    backbutton: {
-   
-        alignItems: 'flex-start',
-        color: '#000000',
-        width: 100
-    },
     
     button: {
         marginTop: '40%',

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, Animated, ActivityIndicator, ScrollView} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, Animated, ActivityIndicator, ScrollView, Image} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
@@ -34,17 +34,18 @@ class RoundScreen extends React.Component {
                     />
 
                     <View style={styles.titles}>
-                        <Text style={styles.title}>Guess Your Friends</Text>
-                        <Text style={styles.subtitle}>Lets Get Judgy</Text>
+                        <Image style={styles.logo}
+                        source={require('./assets/NewLogo2.png')}
+                        />
                     </View>
 
                     <ScrollView>
                         <View style={styles.importantText}>
-                            <Text style={styles.instruction}>Welcome to Round 1</Text>
+                            <Text style={styles.instruction}>ROUND 1</Text>
                         </View>
 
                         <View style={styles.importantText}>
-                            <Text style={styles.instruction2}>Choose The Player That Best Meets Each Prompt!</Text>
+                            <Text style={styles.instruction2}>Earn Points By Guessing With The Crowd!</Text>
                         </View>
 
                         <View style={styles.clockContainer}>
@@ -73,8 +74,7 @@ class RoundScreen extends React.Component {
 
                     {this.state.loading &&
                     <View style={styles.loading}>
-                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
-                        <ActivityIndicator/>
+                        <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.shouldShowActivityIndicator}/>
                     </View>
                     }           
 
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
       },
     
     instruction: {
-        fontSize: 30,
+        fontSize: 50,
         fontWeight: '900',
         color: 'white',
         marginTop: '5%',

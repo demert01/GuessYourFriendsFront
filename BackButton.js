@@ -20,22 +20,25 @@ const BackButtonWithBackground = props => {
 const styles = StyleSheet.create({
    
     button: {
-        borderRadius: 0,
-        marginTop: '1%',
-        padding: 5,
-        width: 70,
-      
-        alignItems: 'center',
+        height: 80,
+        width: 350,
         borderColor: 'black',
+        backgroundColor: '#ff2e63',
         borderWidth: 5,
+       // borderRadius: 25,
+        textAlign: 'center',
+        alignItems: 'center',
+        fontSize: 30,
+        fontWeight: '800'
     },
 
     text:{
         color: 'white',
         fontWeight: '900',
         textTransform: 'uppercase',
-        fontSize: 15,
+        fontSize: 30,
         textAlign: 'center',
+        marginTop: 16
     }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, ScrollView, RefreshControl, ActivityIndicator} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, ScrollView, RefreshControl, ActivityIndicator, Image} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import ButtonWithBackground from "./button";
 import Game from "./API/Game/Game";
@@ -171,8 +171,7 @@ class Waiting extends React.Component {
 
                         {this.state.loading &&
                         <View style={styles.loading}>
-                            <Text style={styles.loadingText}>Waiting for Other Players</Text>
-                            <ActivityIndicator/>
+                            <ActivityIndicator size='large' color="#FFFFFF" animating={this.state.shouldShowActivityIndicator}/>
                         </View>
                         }
 
@@ -263,7 +262,6 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         bottom: 0,
-       // opacity: 0.5,
         justifyContent: 'center',
         alignItems: 'center'
     },

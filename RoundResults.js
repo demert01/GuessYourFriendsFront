@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator, RefreshControl} from "react-native";
+import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator, RefreshControl, Image} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 const GameAPI = require('./API/Game/GameAPI');
@@ -94,7 +94,7 @@ class RoundResults extends React.Component {
 
                 <View style={styles.questionContainer}>   
                     <View style={styles.titles}>
-                            <Text style={styles.title}>Round 1</Text>
+                            <Text style={styles.title}>ROUND 1</Text>
                     </View>
 
                     {this.state.loading &&
@@ -108,7 +108,7 @@ class RoundResults extends React.Component {
                         {
                             this.state.assembledQuestionAndVotes.map((item, index) => (
                                 <View key = {index} style = {styles.item}>
-                                    <Text style={{fontSize: 35, fontWeight: '800', color: 'white', textAlign: 'center'}}>Question {item.questionNumber} {'\n'} {this.props.route.params.questions[item.questionNumber - 1].questionContent}</Text>
+                                    <Text style={{fontSize: 35, fontWeight: '800', color: 'white', textAlign: 'center'}}>QUESTION {item.questionNumber} {'\n'} {this.props.route.params.questions[item.questionNumber - 1].questionContent}</Text>
                                     {
                                         item.voteTotals.map((total, index2) => (
                                             <View key = {index2} style = {styles.item2}>

@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ButtonWithBackground from "./button";
 import BackButtonWithBackground from "./BackButton.js";
-import { StyleSheet, Text, View, ImageBackground, ScrollView, TextInput, Platform } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, ScrollView, Image } from 'react-native';
 import Input from './input';
 
 // 
@@ -20,22 +20,19 @@ export default class Join extends React.Component {
               style={styles.image}
           />
           <ScrollView>
-              <View style={styles.backbutton}>
-                <BackButtonWithBackground onPress={() => {navigate('Home')}} text='back' color='black' />
-              </View>
+              
             
             <View style={styles.titles}>
-              <Text style={styles.title}>Guess Your</Text>
-              <Text style={styles.title}>Friends</Text>
-              <Text style={styles.subtitle}>Let's get Judgy</Text>
-            </View>
-
-            
-            <View style={styles.importantText}>
-              <Text style={styles.instruction}>Type in the Game Code</Text>
+                 <Image style={styles.logo}
+                  source={require('./assets/NewLogo2.png')}
+                  />
             </View>
 
             <Input navigation={this.props.navigation}/>
+
+            <View style={styles.backbutton}>
+                <BackButtonWithBackground onPress={() => {navigate('Home')}} text='Return To Home' color='#ff2e63' />
+            </View>
 
 
           </ScrollView>
@@ -73,17 +70,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#000000'
 },
-backbutton: {
-   
-  alignItems: 'flex-start',
-  color: '#000000',
-  width: 100
-},
+  backbutton: {
+    color: '#000000',
+    width: 100,
+    marginHorizontal: '8%'
+  },
 
   titles: {
     width: '100%',
     alignItems: 'center',
-    top: -20
+    marginTop: '20%'
   },
 
   title: {
