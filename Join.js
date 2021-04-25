@@ -83,6 +83,7 @@ backbutton: {
   titles: {
     width: '100%',
     alignItems: 'center',
+    top: -20
   },
 
   title: {
@@ -107,7 +108,8 @@ backbutton: {
   importantText: {
     marginTop: '5%',
     width: '100%',
-    alignItems: 'center'
+    alignItems: 'center',
+    top: -20
   },
 
   instruction: {

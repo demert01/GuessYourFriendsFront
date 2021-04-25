@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        top: -40
+        top: -60
     },
     input1: {
         margin: 30,

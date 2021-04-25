@@ -22,6 +22,8 @@ class Home extends React.Component {
                         <Text style={styles.subtitle}>Lets Get Judgy</Text>
                     </View>
 
+                    
+
 
                     <View style={styles.button1}>
                         <ButtonWithBackground onPress={() => {navigate('HostScreen')}} text='Host Game' color = '#ff2e63'/>
