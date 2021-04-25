@@ -58,7 +58,7 @@ class RoundScreen extends React.Component {
                                 ariaLabel='hi'
                                 onComplete={() => {
                                     navigate('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
-                                        deviceId: this.props.route.params.deviceId})}
+                                        deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost})}
                                 }
                             >
                                 {({ remainingTime, animatedColor }) => (

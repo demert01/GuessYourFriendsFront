@@ -17,7 +17,7 @@ class RoundResults extends React.Component {
             assembledQuestionAndVotes: [],
             currQuestionNumber: this.props.route.params.currQuestionNumber,
             votesByQuestion: this.props.route.params.votesByQuestion,
-            deviceIds: this.props.route.params.deviceIds
+            deviceIds: this.props.route.params.deviceIds,
         }
     }
 
@@ -56,6 +56,30 @@ class RoundResults extends React.Component {
 
     componentDidMount() {
         this.populateAssembled();
+        if(!this.props.route.params.isHost) {
+            this.interval = setInterval(() => {
+                if(this.state.makingAPICall === false) {
+                    this.setState({makingAPICall: true});
+                    console.log("MAKING API CALL");
+                    GameAPI.get_game_with_join_code(this.props.route.params.joinCode)
+                        .then(game => {
+                            console.log(game);
+                            if(game.showScoreTime !== null && game.showScoreTime !== undefined) {
+                                console.log(game.showScoreTime);
+                                this.setState({makingAPICall: false});
+                                clearInterval(this.interval);
+                                this.props.navigation.navigate('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
+                                    votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes});
+                            } else {
+                                this.setState({makingAPICall: false});
+                            }
+                        })
+                        .catch(err => {
+                            this.setState({makingAPICall: false});
+                        });
+                }
+            }, 3000);
+        }
     }
 
     // Round Results will display the results for each qeustion
@@ -73,6 +97,12 @@ class RoundResults extends React.Component {
                             <Text style={styles.title}>Round 1</Text>
                     </View>
 
+                    {this.state.loading &&
+                    <View style={styles.loading}>
+                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                        <ActivityIndicator/>
+                    </View>
+                    }
 
                     <ScrollView>
                         {
@@ -80,8 +110,8 @@ class RoundResults extends React.Component {
                                 <View key = {index} style = {styles.item}>
                                     <Text style={{fontSize: 35, fontWeight: '800', color: 'white', textAlign: 'center'}}>Question {item.questionNumber} {'\n'} {this.props.route.params.questions[item.questionNumber - 1].questionContent}</Text>
                                     {
-                                        item.voteTotals.map((total) => (
-                                            <View key = {index} style = {styles.item2}>
+                                        item.voteTotals.map((total, index2) => (
+                                            <View key = {index2} style = {styles.item2}>
                                                 <Text style={{fontSize: 25, fontWeight: '800', color: 'white', textAlign: 'left'}}>{total.voteTotal + " Voted For " + total.deviceId}</Text>
                                            </View>
                                         ))
@@ -90,12 +120,26 @@ class RoundResults extends React.Component {
                                 
                             ))
                         }
+                        <View style={styles.button1}>
+                            {
+                                this.props.route.params.isHost ?
+                                    <ButtonWithBackground onPress={() => {
+                                        this.setState({loading: true});
+                                        GameAPI.move_to_scores(this.props.route.params.joinCode)
+                                            .then(game => {
+                                                this.setState({loading: false});
+                                                navigate('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
+                                                    votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes});
+                                            })
+                                            .catch(err => {
+                                                alert('Error moving to scores screen');
+                                                this.setState({loading: false});
+                                            });
+                                    }} text='View Standings' color = '#ff2e63'/> :
+                                    null
+                            }
+                        </View>
                     </ScrollView>
-
-                    <View style={styles.button1}>
-                        <ButtonWithBackground onPress={() => {navigate('RoundStandings', {currRoundNumber: 1, questions: this.props.route.params.questions, 
-                            votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes})}} text='View Standings' color = '#ff2e63'/>
-                    </View>
 
                 </View>
 

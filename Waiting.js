@@ -90,7 +90,7 @@ class Waiting extends React.Component {
                             this.setState({loading: false});
                             clearInterval(this.interval2);
                             this.props.route.params.navigation.navigate('RoundScreen', {gameStartTime: game.gameStartTime, questions: game.questions, players: game.deviceIds,
-                            joinCode: game.joinCode, deviceId: this.props.route.params.isHost ? this.props.route.params.hostDeviceId : this.props.route.params.playerNickname});
+                            joinCode: game.joinCode, deviceId: this.props.route.params.isHost ? this.props.route.params.hostDeviceId : this.props.route.params.playerNickname, isHost: this.props.route.params.isHost});
                         } else {
                             this.setState({makingAPICall: false});
                         }

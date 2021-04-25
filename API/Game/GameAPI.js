@@ -14,7 +14,8 @@ exports.get_game_for_join_code = async (joinCode, newDeviceId) => {
                 const questions = response.data.game.questions;
                 const votesByQuestion = response.data.game.votesByQuestion;
                 const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+                const showScoreTime = response.data.game.showScoreTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
             })
             .catch(err => {
                 reject(err);
@@ -39,7 +40,8 @@ exports.get_game_with_join_code = async (joinCode) => {
                 const questions = response.data.game.questions;
                 const votesByQuestion = response.data.game.votesByQuestion;
                 const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+                const showScoreTime = response.data.game.showScoreTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
             })
             .catch(err => {
                 reject(err);
@@ -64,7 +66,8 @@ exports.create_game = async (hostDeviceId, questionSet) => {
                const questions = response.data.game.questions;
                const votesByQuestion = response.data.game.votesByQuestion;
                const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
-              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+               const showScoreTime = response.data.game.showScoreTime;
+              resolve(new Game(gameDeviceIds, newGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
            })
            .catch((err) => {
                reject(err);
@@ -90,7 +93,8 @@ exports.set_ready = async (joinCode, deviceID) => {
                 const questions = response.data.game.questions;
                 const votesByQuestion = response.data.game.votesByQuestion;
                 const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+                const showScoreTime = response.data.game.showScoreTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
             })
             .catch(err => {
                 reject(err);
@@ -115,7 +119,8 @@ exports.start_game = async (joinCode, hostDeviceId) => {
                 const questions = response.data.game.questions;
                 const votesByQuestion = response.data.game.votesByQuestion;
                 const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+                const showScoreTime = response.data.game.showScoreTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
             })
             .catch(err => {
                 reject(err);
@@ -140,7 +145,8 @@ exports.vote = async (joinCode, questionNumber, votedFor, deviceId) => {
               const questions = response.data.game.questions;
               const votesByQuestion = response.data.game.votesByQuestion;
               const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
-              resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+              const showScoreTime = response.data.game.showScoreTime;
+              resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
           })
           .catch(err => {
               console.log(joinCode);
@@ -168,7 +174,33 @@ exports.check_ready_next_question = async (joinCode, questionNumber) => {
                 const questions = response.data.game.questions;
                 const votesByQuestion = response.data.game.votesByQuestion;
                 const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
-                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime));
+                const showScoreTime = response.data.game.showScoreTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
+            })
+            .catch(err => {
+                console.log(err.response.data.message);
+                reject(err);
+            });
+    }));
+
+    return await gamePromise;
+};
+
+exports.move_to_scores = async (joinCode) => {
+    let gamePromise = new Promise(((resolve, reject) => {
+        client.post('/api/game/moveToScores', {joinCode: joinCode})
+            .then((response) => {
+                const joinedGameCode = response.data.game.joinCode;
+                const joinedGameDeviceIds = response.data.game.deviceIds;
+                const started = response.data.game.started;
+                const readyPlayers = response.data.game.readyPlayers;
+                const gameStartTime = response.data.game.gameStartTime;
+                const questionSet = response.data.game.questionSet;
+                const questions = response.data.game.questions;
+                const votesByQuestion = response.data.game.votesByQuestion;
+                const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
+                const showScoreTime = response.data.game.showScoreTime;
+                resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
             })
             .catch(err => {
                 console.log(err.response.data.message);

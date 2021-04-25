@@ -48,7 +48,7 @@ class QuestionScreen extends React.Component {
                                 let currQuestion = this.state.currQuestionNumber + 1;
                                 if (currQuestion % 5 === 0 && currQuestion !== 0) {
                                     const { navigate } = this.props.navigation;
-                                    navigate('RoundResults', {currRoundNumber: 1, questions: this.props.route.params.questions, votesByQuestion: game.votesByQuestion, deviceIds: game.deviceIds})
+                                    navigate('RoundResults', {joinCode: this.props.route.params.joinCode, currRoundNumber: 1, questions: this.props.route.params.questions, votesByQuestion: game.votesByQuestion, deviceIds: game.deviceIds, isHost: this.props.route.params.isHost})
                                 } else {
                                     currQuestion = currQuestion;
                                     this.setState({waitingForNext: false, currQuestionNumber: currQuestion, disableButtons: false, makingAPICall: false})
