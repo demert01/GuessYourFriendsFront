@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import ButtonWithBackground from "./button";
+import ButtonWithBackground from "./button.js";
+import BackButtonWithBackground from "./BackButton.js";
 import { StyleSheet, Text, View, ImageBackground} from 'react-native';
 import HostScreenInput from './HostScreenInput.js';
 import QuestionSelections from './QuestionSelections.js';
@@ -11,13 +12,22 @@ export default class HostScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (  
         <View style={styles.container}>
+          
           <View style={styles.carContainer}>
+
+        
+
  
             <ImageBackground 
                 source={require('./assets/background.png')}
                 style={styles.image}
             />
 
+              <View style={styles.backbutton}>
+                <BackButtonWithBackground onPress={() => {navigate('Home')}} text='back' color='black' />
+              </View>
+
+           
               <View style={styles.titles}>
                 <Text style={styles.title}>Guess Your</Text>
                 <Text style={styles.title}>Friends</Text>
@@ -85,6 +95,12 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 10
   },
+  backbutton: {
+   
+    alignItems: 'flex-start',
+    color: '#000000',
+    width: 100
+},
 
   button: {
     marginTop: '10%',

@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ButtonWithBackground from "./button";
+import BackButtonWithBackground from "./BackButton.js";
 import { StyleSheet, Text, View, ImageBackground, ScrollView, TextInput, Platform } from 'react-native';
 import Input from './input';
 
@@ -8,6 +9,7 @@ import Input from './input';
 export default class Join extends React.Component {
   
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
 
@@ -18,6 +20,9 @@ export default class Join extends React.Component {
               style={styles.image}
           />
           <ScrollView>
+              <View style={styles.backbutton}>
+                <BackButtonWithBackground onPress={() => {navigate('Home')}} text='back' color='black' />
+              </View>
             
             <View style={styles.titles}>
               <Text style={styles.title}>Guess Your</Text>
@@ -67,6 +72,12 @@ const styles = StyleSheet.create({
     marginTop: '80%',
     alignItems: 'center',
     color: '#000000'
+},
+backbutton: {
+   
+  alignItems: 'flex-start',
+  color: '#000000',
+  width: 100
 },
 
   titles: {

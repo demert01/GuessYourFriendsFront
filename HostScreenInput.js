@@ -92,6 +92,7 @@ export default HostScreenInput
 const styles = StyleSheet.create({
     container: {
         paddingTop: 0,
+        top: -40
        
     },
     input: {
@@ -106,6 +107,12 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: '800'
         
+    },
+    backbutton: {
+   
+        alignItems: 'flex-start',
+        color: '#000000',
+        width: 100
     },
     
     button: {
