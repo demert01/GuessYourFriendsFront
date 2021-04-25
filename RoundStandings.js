@@ -42,7 +42,7 @@ class RoundStandings extends React.Component {
             else{ // allVotes has some data
                
                 // Check if the name is not already stored
-                if(!allVotes.includes(votesPerQuestion, 0)){
+                if(!allVotes.includes(votePerQuestion, 0)){
                     votePerQuestion = {playerVoted: currVotedFor, points: 1, questionNum: questionNumber};
                     allVotes.push(votePerQuestion);
                 }
@@ -132,15 +132,12 @@ class RoundStandings extends React.Component {
 
                     <ScrollView>
                         {
-                            this.state.deviceIds.map((item, index) => (
-                                this.state.scores.map((players) => (
-                                    <View key = {index} style = {styles.item}> 
-                                        <Text style={styles.item2}>{players.player + ": "}</Text>
-                                        <Text style={styles.title}>{players.score}</Text>
-                                    </View>
-
-                                ))
-                             ))
+                            this.state.scores.map((players, index) => (
+                                <View key = {index} style = {styles.item}>
+                                    <Text style={styles.item2}>{players.player + ": "}</Text>
+                                    <Text style={styles.title}>{players.score}</Text>
+                                </View>
+                            ))
                         }
                     </ScrollView>
                 </View>
