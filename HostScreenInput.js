@@ -45,7 +45,7 @@ class HostScreenInput extends Component {
         this.setState({shouldShowActivityIndicator: true});
         QuestionSetAPI.get_question_sets()
             .then(sets => {
-                this.setState({questionSets: sets, shouldShowActivityIndicator: false});
+                this.setState({questionSets: sets, shouldShowActivityIndicator: false, selectedQuestionSet: sets.length > 0 ? sets[0] : ""});
             })
             .catch(err => {
                 alert("There was a problem getting the question sets");

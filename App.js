@@ -16,6 +16,7 @@ const Stack = createStackNavigator();
 
 // Runs the application and includes each screen used for navigation
 export default function App() {
+    console.disableYellowBox = true;
   return (
       <NavigationContainer>
         <Stack.Navigator>

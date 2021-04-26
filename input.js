@@ -44,7 +44,7 @@ class Input extends Component {
                     underlineColorAndroid="transparent"
                     placeholder="Enter Join Code"
                     placeholderTextColor="white"
-                    autoCapitalize="none"
+                    autoCapitalize="characters"
                     color="white"
                     onChangeText={this.handleCode}
                 />
