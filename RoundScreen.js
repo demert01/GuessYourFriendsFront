@@ -3,6 +3,8 @@ import {ImageBackground, StyleSheet, Text, View, Animated, ActivityIndicator, Sc
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import {GL} from "expo/build/removed.web";
+const GLOBAL = require('./globals');
 
 class RoundScreen extends React.Component {
 
@@ -60,8 +62,9 @@ class RoundScreen extends React.Component {
                                 strokeLinecap='round'
                                 ariaLabel='hi'
                                 onComplete={() => {
+                                    GLOBAL.currRoundNumber = this.state.currRoundNumber;
                                     push('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
-                                        deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost, currRoundNumber: this.state.currRoundNumber, nextRound: this.nextRound})}
+                                        deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost, currRoundNumber: this.state.currRoundNumber})}
                                 }
                             >
                                 {({ remainingTime, animatedColor }) => (

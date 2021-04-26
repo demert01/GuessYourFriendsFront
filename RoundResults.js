@@ -3,6 +3,7 @@ import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator, 
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 const GameAPI = require('./API/Game/GameAPI');
+const GLOBAL = require('./globals');
 
 class RoundResults extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class RoundResults extends React.Component {
             makingAPICall: false,
             waitingForNext: false,
             assembledQuestionAndVotes: [],
-            currQuestionNumber: this.props.route.params.currQuestionNumber,
+            totalAssembledQuestionAndVotes: [],
             votesByQuestion: this.props.route.params.votesByQuestion,
             deviceIds: this.props.route.params.deviceIds,
         }
@@ -36,7 +37,7 @@ class RoundResults extends React.Component {
             let voteTotals = [];
             for(let i = 0; i < 5; i++) {
                 let voteInfo = [];
-                const questionNumber = ((i + 1) * this.state.currRoundNumber);
+                const questionNumber = ((i + 1) + (5 * (this.state.currRoundNumber - 1)));
                 for(let x = 0; x < this.state.deviceIds.length; x++) {
                     const totalForPerson = this.getVotes(this.state.deviceIds[x], questionNumber - 1);
                     voteInfo.push({deviceId: this.state.deviceIds[x], voteTotal: totalForPerson});
@@ -47,10 +48,24 @@ class RoundResults extends React.Component {
                 };
                 voteTotals.push(assembledObject);
             }
-            console.log(voteTotals);
-            //console.log(this.props.route.params.votesByQuestion);
-            //console.log(this.props.route.params.deviceIds);
             this.setState({assembledQuestionAndVotes: voteTotals});
+
+            voteTotals = [];
+            for(let i = 0; i<5*this.state.currRoundNumber; i++) {
+                let voteInfo = [];
+                const questionNumber = i + 1;
+                for(let x = 0; x < this.state.deviceIds.length; x++) {
+                    const totalForPerson = this.getVotes(this.state.deviceIds[x], questionNumber - 1);
+                    voteInfo.push({deviceId: this.state.deviceIds[x], voteTotal: totalForPerson});
+                }
+                let assembledObject = {
+                    questionNumber: "" + questionNumber,
+                    voteTotals: voteInfo
+                };
+                voteTotals.push(assembledObject);
+            }
+
+            this.setState({totalAssembledQuestionAndVotes: voteTotals});
         }
     }
 
@@ -68,9 +83,9 @@ class RoundResults extends React.Component {
                                 console.log(game.showScoreTime);
                                 this.setState({makingAPICall: false});
                                 clearInterval(this.interval);
-                                this.props.navigation.push('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
-                                    votesByQuestion: this.props.route.params.votesByQuestion,
-                                    deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes, isHost: this.props.route.params.isHost, nextRound: this.props.route.params.nextRound, joinCode: this.props.route.params.joinCode, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId});
+                                GLOBAL.assembledQuestionAndVotes = this.state.totalAssembledQuestionAndVotes;
+                                this.props.navigation.push('RoundStandings');
+                                this.setState({makingAPICall: false});
                             } else {
                                 this.setState({makingAPICall: false});
                             }
@@ -95,7 +110,7 @@ class RoundResults extends React.Component {
 
                 <View style={styles.questionContainer}>   
                     <View style={styles.titles}>
-                            <Text style={styles.title}>ROUND 1</Text>
+                            <Text style={styles.title}>ROUND {this.state.currRoundNumber}</Text>
                     </View>
 
                     {this.state.loading &&
@@ -126,14 +141,16 @@ class RoundResults extends React.Component {
                                 this.props.route.params.isHost ?
                                     <ButtonWithBackground onPress={() => {
                                         this.setState({loading: true});
+                                        console.log(this.props.route.params.joinCode);
                                         GameAPI.move_to_scores(this.props.route.params.joinCode)
                                             .then(game => {
+                                                console.log("MOVING TO NEW SCREEN");
                                                 this.setState({loading: false});
-                                                push('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
-                                                    votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes,
-                                                    nextRound: this.props.route.params.nextRound, joinCode: this.props.route.params.joinCode, isHost: this.props.route.params.isHost, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId});
+                                                GLOBAL.assembledQuestionAndVotes = this.state.totalAssembledQuestionAndVotes;
+                                                push('RoundStandings');
                                             })
                                             .catch(err => {
+                                                console.log(err);
                                                 alert('Error moving to scores screen');
                                                 this.setState({loading: false});
                                             });

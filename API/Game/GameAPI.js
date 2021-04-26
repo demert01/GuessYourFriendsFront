@@ -187,9 +187,11 @@ exports.check_ready_next_question = async (joinCode, questionNumber) => {
 };
 
 exports.move_to_scores = async (joinCode) => {
+    console.log("CALLED");
     let gamePromise = new Promise(((resolve, reject) => {
         client.post('/api/game/moveToScores', {joinCode: joinCode})
             .then((response) => {
+                console.log(response.data.game);
                 const joinedGameCode = response.data.game.joinCode;
                 const joinedGameDeviceIds = response.data.game.deviceIds;
                 const started = response.data.game.started;
@@ -200,6 +202,7 @@ exports.move_to_scores = async (joinCode) => {
                 const votesByQuestion = response.data.game.votesByQuestion;
                 const nextQuestionStartTime = response.data.game.nextQuestionStartTime;
                 const showScoreTime = response.data.game.showScoreTime;
+                console.log("RESOLVING PROMISE");
                 resolve(new Game(joinedGameDeviceIds, joinedGameCode, started, readyPlayers, gameStartTime, questionSet, questions, votesByQuestion, nextQuestionStartTime, showScoreTime));
             })
             .catch(err => {

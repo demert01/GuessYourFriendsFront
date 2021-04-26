@@ -4,12 +4,13 @@ import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 import { StackActions } from '@react-navigation/native';
 const GameAPI = require('./API/Game/GameAPI');
+const GLOBAL = require('./globals');
 
 class RoundStandings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currRoundNumber: this.props.route.params.currRoundNumber,
+            currRoundNumber: GLOBAL.currRoundNumber,
             disableButtons: false,
             loading: false,
             makingAPICall: false,
@@ -17,24 +18,23 @@ class RoundStandings extends React.Component {
             scores: [],
             highestScore: 0,
             assembledQuestionAndVotes: [],
-            currQuestionNumber: this.props.route.params.currQuestionNumber,
-            votesByQuestion: this.props.route.params.votesByQuestion,
-            deviceIds: this.props.route.params.deviceIds,
+            votesByQuestion: GLOBAL.votesByQuestion,
+            deviceIds: GLOBAL.players,
         }
     }
 
     shouldIncrement = (questionNumber, votedFor) => {
-        for(let i = 0; i<this.props.route.params.assembledQuestionAndVotes.length; i++) {
-            if(parseInt(this.props.route.params.assembledQuestionAndVotes[i].questionNumber) === questionNumber) {
+        for(let i = 0; i<GLOBAL.assembledQuestionAndVotes.length; i++) {
+            if(parseInt(GLOBAL.assembledQuestionAndVotes[i].questionNumber) === questionNumber) {
                 let current_max = 0;
-                for(let x = 0; x<this.props.route.params.assembledQuestionAndVotes[i].voteTotals.length; x++) {
-                    if(this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].voteTotal > current_max) {
-                        current_max = this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].voteTotal;
+                for(let x = 0; x<GLOBAL.assembledQuestionAndVotes[i].voteTotals.length; x++) {
+                    if(GLOBAL.assembledQuestionAndVotes[i].voteTotals[x].voteTotal > current_max) {
+                        current_max = GLOBAL.assembledQuestionAndVotes[i].voteTotals[x].voteTotal;
                     }
                 }
-                for(let x = 0; x<this.props.route.params.assembledQuestionAndVotes[i].voteTotals.length; x++) {
-                    if(this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].voteTotal >= current_max) {
-                        if(votedFor === this.props.route.params.assembledQuestionAndVotes[i].voteTotals[x].deviceId) {
+                for(let x = 0; x<GLOBAL.assembledQuestionAndVotes[i].voteTotals.length; x++) {
+                    if(GLOBAL.assembledQuestionAndVotes[i].voteTotals[x].voteTotal >= current_max) {
+                        if(votedFor === GLOBAL.assembledQuestionAndVotes[i].voteTotals[x].deviceId) {
                             return true;
                         }
                     }
@@ -49,7 +49,7 @@ class RoundStandings extends React.Component {
     getPlayerScore = (deviceId) => {
         let points = 0;
         // Iterate through each question
-        for(let i = 0; i < 5; i++){      
+        for(let i = 0; i<5*this.state.currRoundNumber; i++){
             let votedFor = "";
             for(let x = 0; x < this.state.votesByQuestion.length; x++) {
                 if(this.state.votesByQuestion[x].questionNumber === i && this.state.votesByQuestion[x].voter === deviceId) {
@@ -77,26 +77,27 @@ class RoundStandings extends React.Component {
                 score: playerScore
             };
             scoreTotals.push(playerObject);        
-        }     
+        }
+        console.log(scoreTotals);
         this.setState({scores: scoreTotals});     
     }
 
     componentDidMount() {
         this.calculateScores();
-        if(!this.props.route.params.isHost) {
+        if(!GLOBAL.isHost) {
             this.interval = setInterval(() => {
                 if(this.state.makingAPICall === false) {
                     this.setState({makingAPICall: true});
                     console.log("MAKING API CALL");
-                    GameAPI.get_game_with_join_code(this.props.route.params.joinCode)
+                    GameAPI.get_game_with_join_code(GLOBAL.joinCode)
                         .then(game => {
                             console.log(game);
                             if(game.gameStartTime) {
                                 this.setState({makingAPICall: false});
                                 clearInterval(this.interval);
                                 this.props.navigation.push('RoundScreen', {currRoundNumber: this.state.currRoundNumber + 1,
-                                    gameStartTime: game.gameStartTime, questions: this.props.route.params.questions,
-                                    players: this.props.route.params.players, deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost, joinCode: this.props.route.params.joinCode})
+                                    gameStartTime: game.gameStartTime, questions: GLOBAL.questions,
+                                    players: GLOBAL.players, deviceId: GLOBAL.deviceId, isHost: GLOBAL.isHost, joinCode: GLOBAL.joinCode})
                             } else {
                                 this.setState({makingAPICall: false});
                             }
@@ -120,7 +121,7 @@ class RoundStandings extends React.Component {
                 />
                 <View style={styles.questionContainer}>   
                     <View style={styles.titles}>
-                            <Text style={styles.title}>Scores</Text>
+                            <Text style={styles.title}>Scores through round {GLOBAL.currRoundNumber}</Text>
                     </View>
 
                     {this.state.loading &&
@@ -141,15 +142,15 @@ class RoundStandings extends React.Component {
                         }
                         <View style={styles.button1}>
                             {
-                                this.props.route.params.isHost ?
+                                GLOBAL.isHost ?
                                     <ButtonWithBackground onPress={() => {
                                         this.setState({loading: true});
-                                        GameAPI.move_to_next_round(this.props.route.params.joinCode)
+                                        GameAPI.move_to_next_round(GLOBAL.joinCode)
                                             .then(game => {
                                                 this.setState({loading: false});
                                                 this.props.navigation.push('RoundScreen', {currRoundNumber: this.state.currRoundNumber + 1,
                                                     gameStartTime: game.gameStartTime,
-                                                    questions: this.props.route.params.questions, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost, joinCode: this.props.route.params.joinCode})
+                                                    questions: GLOBAL.questions, players: GLOBAL.players, deviceId: GLOBAL.deviceId, isHost: GLOBAL.isHost, joinCode: GLOBAL.joinCode})
                                             })
                                             .catch(err => {
                                                 this.setState({loading: false});

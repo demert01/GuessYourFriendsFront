@@ -3,6 +3,7 @@ import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator, 
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
 const GameAPI = require('./API/Game/GameAPI');
+const GLOBAL = require('./globals');
 
 class QuestionScreen extends React.Component {
     constructor(props) {
@@ -48,11 +49,12 @@ class QuestionScreen extends React.Component {
                                 let currQuestion = this.state.currQuestionNumber + 1;
                                 if (currQuestion % 5 === 0 && currQuestion !== 0) {
                                     const { push } = this.props.navigation;
+                                    GLOBAL.votesByQuestion = game.votesByQuestion;
                                     push('RoundResults', {joinCode: this.props.route.params.joinCode,
                                         currRoundNumber: this.props.route.params.currRoundNumber,
                                         questions: this.props.route.params.questions,
                                         votesByQuestion: game.votesByQuestion, deviceIds: game.deviceIds,
-                                        isHost: this.props.route.params.isHost, nextRound: this.props.route.params.nextRound, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId})
+                                        isHost: this.props.route.params.isHost, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId})
                                 } else {
                                     currQuestion = currQuestion;
                                     this.setState({waitingForNext: false, currQuestionNumber: currQuestion, disableButtons: false, makingAPICall: false})

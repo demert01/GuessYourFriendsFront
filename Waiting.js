@@ -4,6 +4,7 @@ import {StatusBar} from "expo-status-bar";
 import ButtonWithBackground from "./button";
 import Game from "./API/Game/Game";
 const GameAPI = require('./API/Game/GameAPI');
+const GLOBAL = require('./globals');
 
 // Waiting Screen which waits for Host to start Lobby
 class Waiting extends React.Component {
@@ -89,6 +90,11 @@ class Waiting extends React.Component {
                         if(game.started && this.checkArrays(game.readyPlayers, game.deviceIds) && game.gameStartTime) {
                             this.setState({loading: false});
                             clearInterval(this.interval2);
+                            GLOBAL.joinCode = game.joinCode;
+                            GLOBAL.isHost = this.props.route.params.isHost;
+                            GLOBAL.deviceId = this.props.route.params.isHost ? this.props.route.params.hostDeviceId : this.props.route.params.playerNickname;
+                            GLOBAL.questions = game.questions;
+                            GLOBAL.players = game.deviceIds;
                             this.props.route.params.navigation.navigate('RoundScreen', {gameStartTime: game.gameStartTime, questions: game.questions, players: game.deviceIds,
                             joinCode: game.joinCode, deviceId: this.props.route.params.isHost ? this.props.route.params.hostDeviceId : this.props.route.params.playerNickname, isHost: this.props.route.params.isHost});
                         } else {
