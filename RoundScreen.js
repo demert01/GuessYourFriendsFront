@@ -48,7 +48,8 @@ class RoundScreen extends React.Component {
                         </View>
 
                         <View style={styles.importantText}>
-                            <Text style={styles.instruction2}>Earn Points By Guessing With The Crowd!</Text>
+                            <Text style={styles.instruction2}>5 Questions</Text>
+                            <Text style={styles.instruction2}>Get Ready</Text>
                         </View>
 
                         <View style={styles.clockContainer}>
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     },
 
     importantText: {
-        marginTop: '5%',
+        //marginTop: '5%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
       },
 
     instruction2: {
-        fontSize: 30,
+        fontSize: 35,
         fontWeight: '900',
         color: 'white',
         marginTop: 30,
