@@ -11,6 +11,7 @@ class RoundScreen extends React.Component {
         this.state = {
             isReady: false,
             loading: true,
+            currRoundNumber: this.props.route.params.currRoundNumber || 1
         };
     }
 
@@ -23,7 +24,7 @@ class RoundScreen extends React.Component {
 
     // Round Screen gives quick briefing before navigating to question screen
     render() {
-        const { navigate } = this.props.navigation;
+        const { push } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <View style={styles.carContainer}>
@@ -41,7 +42,7 @@ class RoundScreen extends React.Component {
 
                     <ScrollView>
                         <View style={styles.importantText}>
-                            <Text style={styles.instruction}>ROUND 1</Text>
+                            <Text style={styles.instruction}>ROUND {this.state.currRoundNumber}</Text>
                         </View>
 
                         <View style={styles.importantText}>
@@ -52,14 +53,15 @@ class RoundScreen extends React.Component {
                             <CountdownCircleTimer
                                 isPlaying={this.state.isReady}
                                 duration={10}
+                                key={this.state.currRoundNumber}
                                 colors='#ff2e63'
                                 trailColor='#ffffff'
                                 strokeWidth='10'
                                 strokeLinecap='round'
                                 ariaLabel='hi'
                                 onComplete={() => {
-                                    navigate('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
-                                        deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost})}
+                                    push('QuestionScreen', {questions: this.props.route.params.questions, players: this.props.route.params.players, joinCode: this.props.route.params.joinCode,
+                                        deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost, currRoundNumber: this.state.currRoundNumber, nextRound: this.nextRound})}
                                 }
                             >
                                 {({ remainingTime, animatedColor }) => (

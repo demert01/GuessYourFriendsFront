@@ -8,7 +8,7 @@ class QuestionScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currQuestionNumber: 0,
+            currQuestionNumber: (this.props.route.params.currRoundNumber - 1) * 5,
             players: this.props.route.params.players,
             disableButtons: false,
             loading: false,
@@ -47,8 +47,12 @@ class QuestionScreen extends React.Component {
                                 clearInterval(this.interval);
                                 let currQuestion = this.state.currQuestionNumber + 1;
                                 if (currQuestion % 5 === 0 && currQuestion !== 0) {
-                                    const { navigate } = this.props.navigation;
-                                    navigate('RoundResults', {joinCode: this.props.route.params.joinCode, currRoundNumber: 1, questions: this.props.route.params.questions, votesByQuestion: game.votesByQuestion, deviceIds: game.deviceIds, isHost: this.props.route.params.isHost})
+                                    const { push } = this.props.navigation;
+                                    push('RoundResults', {joinCode: this.props.route.params.joinCode,
+                                        currRoundNumber: this.props.route.params.currRoundNumber,
+                                        questions: this.props.route.params.questions,
+                                        votesByQuestion: game.votesByQuestion, deviceIds: game.deviceIds,
+                                        isHost: this.props.route.params.isHost, nextRound: this.props.route.params.nextRound, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId})
                                 } else {
                                     currQuestion = currQuestion;
                                     this.setState({waitingForNext: false, currQuestionNumber: currQuestion, disableButtons: false, makingAPICall: false})

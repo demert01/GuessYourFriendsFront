@@ -2,6 +2,7 @@ import React from 'react';
 import {ImageBackground, StyleSheet, Text, View, ScrollView, ActivityIndicator, RefreshControl} from "react-native";
 import ButtonWithBackground from "./button";
 import {StatusBar} from "expo-status-bar";
+import { StackActions } from '@react-navigation/native';
 const GameAPI = require('./API/Game/GameAPI');
 
 class RoundStandings extends React.Component {
@@ -82,6 +83,30 @@ class RoundStandings extends React.Component {
 
     componentDidMount() {
         this.calculateScores();
+        if(!this.props.route.params.isHost) {
+            this.interval = setInterval(() => {
+                if(this.state.makingAPICall === false) {
+                    this.setState({makingAPICall: true});
+                    console.log("MAKING API CALL");
+                    GameAPI.get_game_with_join_code(this.props.route.params.joinCode)
+                        .then(game => {
+                            console.log(game);
+                            if(game.gameStartTime) {
+                                this.setState({makingAPICall: false});
+                                clearInterval(this.interval);
+                                this.props.navigation.push('RoundScreen', {currRoundNumber: this.state.currRoundNumber + 1,
+                                    gameStartTime: game.gameStartTime, questions: this.props.route.params.questions,
+                                    players: this.props.route.params.players, deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost, joinCode: this.props.route.params.joinCode})
+                            } else {
+                                this.setState({makingAPICall: false});
+                            }
+                        })
+                        .catch(err => {
+                            this.setState({makingAPICall: false});
+                        });
+                }
+            }, 3000);
+        }
     }
 
     // Round Results will display the results for each qeustion
@@ -98,6 +123,13 @@ class RoundStandings extends React.Component {
                             <Text style={styles.title}>Scores</Text>
                     </View>
 
+                    {this.state.loading &&
+                    <View style={styles.loading}>
+                        <Text style={styles.loadingText}>Waiting for Other Players</Text>
+                        <ActivityIndicator/>
+                    </View>
+                    }
+
                     <ScrollView>
                         {
                             this.state.scores.map((players, index) => (
@@ -107,6 +139,25 @@ class RoundStandings extends React.Component {
                                 </View>
                             ))
                         }
+                        <View style={styles.button1}>
+                            {
+                                this.props.route.params.isHost ?
+                                    <ButtonWithBackground onPress={() => {
+                                        this.setState({loading: true});
+                                        GameAPI.move_to_next_round(this.props.route.params.joinCode)
+                                            .then(game => {
+                                                this.setState({loading: false});
+                                                this.props.navigation.push('RoundScreen', {currRoundNumber: this.state.currRoundNumber + 1,
+                                                    gameStartTime: game.gameStartTime,
+                                                    questions: this.props.route.params.questions, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId, isHost: this.props.route.params.isHost, joinCode: this.props.route.params.joinCode})
+                                            })
+                                            .catch(err => {
+                                                this.setState({loading: false});
+                                            });
+                                    }} text='Next Round' color = '#ff2e63'/> :
+                                    null
+                            }
+                        </View>
                     </ScrollView>
                 </View>
                 <StatusBar style="auto" />
@@ -202,6 +253,13 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 5,
         textAlign: 'center'
+    },
+
+    button1: {
+        //marginTop: '20%',
+        marginBottom: '5%',
+        alignItems: 'center',
+        color: '#000000'
     },
 
 });

@@ -68,8 +68,9 @@ class RoundResults extends React.Component {
                                 console.log(game.showScoreTime);
                                 this.setState({makingAPICall: false});
                                 clearInterval(this.interval);
-                                this.props.navigation.navigate('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
-                                    votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes});
+                                this.props.navigation.push('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
+                                    votesByQuestion: this.props.route.params.votesByQuestion,
+                                    deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes, isHost: this.props.route.params.isHost, nextRound: this.props.route.params.nextRound, joinCode: this.props.route.params.joinCode, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId});
                             } else {
                                 this.setState({makingAPICall: false});
                             }
@@ -84,7 +85,7 @@ class RoundResults extends React.Component {
 
     // Round Results will display the results for each qeustion
     render() {
-        const { navigate } = this.props.navigation;
+        const { push } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <ImageBackground
@@ -128,8 +129,9 @@ class RoundResults extends React.Component {
                                         GameAPI.move_to_scores(this.props.route.params.joinCode)
                                             .then(game => {
                                                 this.setState({loading: false});
-                                                navigate('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
-                                                    votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes});
+                                                push('RoundStandings', {showScoreTime: game.showScoreTime, currRoundNumber: 1, questions: this.props.route.params.questions,
+                                                    votesByQuestion: this.props.route.params.votesByQuestion,  deviceIds: this.props.route.params.deviceIds, assembledQuestionAndVotes: this.state.assembledQuestionAndVotes,
+                                                    nextRound: this.props.route.params.nextRound, joinCode: this.props.route.params.joinCode, isHost: this.props.route.params.isHost, players: this.props.route.params.players, deviceId: this.props.route.params.deviceId});
                                             })
                                             .catch(err => {
                                                 alert('Error moving to scores screen');

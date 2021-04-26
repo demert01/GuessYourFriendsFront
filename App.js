@@ -20,8 +20,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-          <Stack.Screen name="HostScreen" component={HostScreen} options={{ headerShown: true }} />
-          <Stack.Screen name="Join" component={Join} options={{ headerShown: true }} />
+          <Stack.Screen name="HostScreen" component={HostScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Join" component={Join} options={{ headerShown: false }} />
           <Stack.Screen name="RoundScreen" component={RoundScreen} options={{ headerShown: false }} />
           <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }} />
           <Stack.Screen name="RoundResults" component={RoundResults} options={{ headerShown: false }} />
