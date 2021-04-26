@@ -114,9 +114,9 @@ class Waiting extends React.Component {
                     />
 
                 <View style={styles.titles}>
-                    <Text style={styles.title}>Guess Your</Text>
-                    <Text style={styles.title}>Friends</Text>
-                    <Text style={styles.subtitle}>Let's Get Judgy</Text>
+                    <Image style={styles.logo}
+                    source={require('./assets/NewLogo2.png')}
+                    />
                 </View>
 
                     <View>
