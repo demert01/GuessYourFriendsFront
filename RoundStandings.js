@@ -133,7 +133,9 @@ class RoundStandings extends React.Component {
 
                     <ScrollView>
                         {
-                            this.state.scores.map((players, index) => (
+                            this.state.scores
+                                .sort((a, b) => a.score > b.score ? -1 : 1)
+                                .map((players, index) => (
                                 <View key = {index} style = {styles.item}>
                                     <Text style={styles.item2}>{players.player + ": "}</Text>
                                     <Text style={styles.title}>{players.score}</Text>

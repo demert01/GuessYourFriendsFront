@@ -84,7 +84,11 @@ class RoundResults extends React.Component {
                                 this.setState({makingAPICall: false});
                                 clearInterval(this.interval);
                                 GLOBAL.assembledQuestionAndVotes = this.state.totalAssembledQuestionAndVotes;
-                                this.props.navigation.push('RoundStandings');
+                                if(GLOBAL.currRoundNumber === 3) {
+                                    this.props.navigation.push('GameResults');
+                                } else {
+                                    this.props.navigation.push('RoundStandings');
+                                }
                                 this.setState({makingAPICall: false});
                             } else {
                                 this.setState({makingAPICall: false});
@@ -147,7 +151,11 @@ class RoundResults extends React.Component {
                                                 console.log("MOVING TO NEW SCREEN");
                                                 this.setState({loading: false});
                                                 GLOBAL.assembledQuestionAndVotes = this.state.totalAssembledQuestionAndVotes;
-                                                push('RoundStandings');
+                                                if(GLOBAL.currRoundNumber === 3) {
+                                                    this.props.navigation.push('GameResults');
+                                                } else {
+                                                    this.props.navigation.push('RoundStandings');
+                                                }
                                             })
                                             .catch(err => {
                                                 console.log(err);
