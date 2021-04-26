@@ -25,10 +25,10 @@ export default function App() {
           <Stack.Screen name="RoundScreen" component={RoundScreen} options={{ headerShown: false }} />
           <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }} />
           <Stack.Screen name="RoundResults" component={RoundResults} options={{ headerShown: false }} />
-          <Stack.Screen name="GameResults" component={GameResults} options={{ headerShown: false }} />
           <Stack.Screen name="Waiting" component={Waiting} options={{ headerShown: false }} />
           <Stack.Screen name="RoundStandings" component={RoundStandings} options={{ headerShown: false }} />
-
+          <Stack.Screen name="GameResults" component={GameResults} options={{ headerShown: false }} />
+          
 
         </Stack.Navigator>
       </NavigationContainer>

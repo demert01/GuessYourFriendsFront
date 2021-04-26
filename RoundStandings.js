@@ -121,7 +121,7 @@ class RoundStandings extends React.Component {
                 />
                 <View style={styles.questionContainer}>   
                     <View style={styles.titles}>
-                            <Text style={styles.title}>Scores through round {GLOBAL.currRoundNumber}</Text>
+                            <Text style={styles.title}>Current Scores </Text>
                     </View>
 
                     {this.state.loading &&

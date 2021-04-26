@@ -86,7 +86,7 @@ class QuestionScreen extends React.Component {
 
 
                     <View style={styles.titles}>
-                        <Text style={styles.title}>QUESTION {this.state.currQuestionNumber + 1}</Text>
+                        <Text style={styles.title}>Question {this.state.currQuestionNumber + 1}</Text>
                     </View>
 
                     <View style={styles.importantText}>
